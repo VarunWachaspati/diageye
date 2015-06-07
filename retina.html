@@ -10,7 +10,8 @@
 
     thumbImg.src = 'assets/img/Fundus_photograph_of_normal_left_eye.jpg';
     thumbImg.onload = function() {
-    var tmpCtx = window.document.getElementById('can').getContext("2d");
+        //**ERROR**Not able to draw a the image onto Canvas with id "canvasEdit"
+    var tmpCtx = window.document.getElementById('canvasEdit').getContext("2d");
     
     tmpCtx.save();
     tmpCtx.beginPath();
@@ -44,7 +45,7 @@
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
-                            _drawing.addDoodle('AntPVR');
+                           // _drawing.addDoodle('AntPVR');
                             function click(){
                             alert(_drawing.doodleArray[0].description());
                             }
