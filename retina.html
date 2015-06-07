@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
+    <script src="assets/js/dist/eyedraw.js" type="text/javascript"></script>
+
+    <script type="text/javascript">
+    //Script to Draw a Circular Retina on Canvas 
+    var thumbImg = document.createElement('img');
+
+    thumbImg.src = 'assets/img/Fundus_photograph_of_normal_left_eye.jpg';
+    thumbImg.onload = function() {
+    var tmpCtx = window.document.getElementById('canvasEdit').getContext("2d");
+    
+    tmpCtx.save();
+    tmpCtx.beginPath();
+    tmpCtx.arc(200, 190, 190, 0, Math.PI * 2, true);
+    tmpCtx.closePath();
+    tmpCtx.clip();
+
+    tmpCtx.drawImage(thumbImg, 0, 0, 400, 400);
+
+    tmpCtx.beginPath();
+    tmpCtx.arc(0, 0, 25, 0, Math.PI * 2, true);
+    tmpCtx.clip();
+    tmpCtx.closePath();
+    tmpCtx.restore();
+    };
+
+    </script>
+    <script type="text/javascript">
+       		var drawingEdit
+            function init(){
+            drawingEdit = new ED.Drawing(document.getElementById('canvasEdit'), ED.eye.Left, 'LPS', true, {graphicsPath:'assets/img/'});
+            var controller = new eyeDrawController(drawingEdit);
+                drawingEdit.init();}
+            function eyeDrawController(_drawing){
+                this.callBack = callBack;
+                function click(){
+                            alert(_drawing.doodleArray[0].description());
+                            }
+                _drawing.registerForNotifications(this, 'callBack', ['ready']);
+                _drawing.showDoodleControls = true;
+                function callBack(_messageArray){
+                    switch (_messageArray['eventName']){
+                        case 'ready':
+                            _drawing.addDoodle('AntPVR');
+                            function click(){
+                            alert(_drawing.doodleArray[0].description());
+                            }
+                            //click();
+							_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
+							_drawing.addBindings({MacularDystrophy:{}});
+                            _drawing.addDeleteValues({gradeSelect:'None'});
+							_drawing.deselectDoodles();
+                            break;
+            }
+            }
+            }
+            
+
+    </script>
+
+   
+</head>
+<body onload="init();">
+<button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" /></button>
+<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularDystrophy'); return false;" ><img src="assets/img/old/MacularDystrophy.gif" /></button>
+<button class="imgbutton" onclick="alert(drawingEdit.doodleArray[2].groupDescription());alert(drawingEdit.doodleArray[1].description()); return false;" ><img src="assets/img/old/Save.gif" /></button>
+
+<br/>
+<canvas id="canvasEdit" class="ed-canvas-edit" width="400" height="400" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
+<canvas id="can" class="ed-canvas-edit" width="400" height="400"></canvas>
+<select id="gradeSelect">
+ <option value="None" selected="selected">None</option>
+ <option value="Mild" >Mild</option>
+ <option value="Moderate">Moderate</option>
+ <option value="White">White</option>
+</select>
+<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>
+<textarea rows="4" cols="180" id="saveInput"></textarea>
+</body>
+
+</html>
