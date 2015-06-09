@@ -102,6 +102,19 @@
                             _drawing.addBindings({RetinalArteryOcclusionPostPole:{}});
                             _drawing.addBindings({CottonWoolSpot:{}});
                             _drawing.addBindings({CystoidMacularOedema:{}});
+                            _drawing.addBindings({ChoroidalNaevus:{}});
+                            _drawing.addBindings({MacularThickening:{}});
+                            _drawing.addBindings({FibrousProliferation:{}});
+                            _drawing.addBindings({CNV:{}});
+                            _drawing.addBindings({RetinalVeinOcclusionPostPole:{}});
+                            _drawing.addBindings({DiscPallor:{}});
+                            _drawing.addBindings({Geographic:{}});
+                            _drawing.addBindings({InjectionSite:{}});
+                            _drawing.addBindings({PRPPostPole:{}});
+                            _drawing.addBindings({RPERip:{}});
+                            _drawing.addBindings({DrainageSite:{}});
+                            _drawing.addBindings({ChandelierSingle:{}});
+                            _drawing.addBindings({AngleNV:{}});
                             //_drawing.addDeleteValues({gradeSelect:'None'});
 							_drawing.deselectDoodles();
                             break;
@@ -124,6 +137,8 @@
 
         saveInput.innerHTML+=", ";
     }
+        saveInput.innerHTML+="SnoMed Code:";
+        saveInput.innerHTML+=drawingEdit.diagnosis();
     }
 </script>
    
@@ -251,6 +266,33 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CystoidMacularOedema'); return false;" ><img src="assets/img/old/CystoidMacularOedema.gif" />CystoidMacularOedema</button>
 
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ChoroidalNaevus'); return false;" ><img src="assets/img/old/ChoroidalNaevus.gif" />ChoroidalNaevus</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularThickening'); return false;" ><img src="assets/img/old/MacularThickening.gif" />MacularThickening</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('FibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />FibrousProliferation</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('CNV'); return false;" ><img src="assets/img/old/CNV.gif" />CNV</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalVeinOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalVeinOcclusionPostPole.gif" />RetinalVeinOcclusionPostPole</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('DiscPallor'); return false;" ><img src="assets/img/old/DiscPallor.gif" />DiscPallor</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Geographic'); return false;" ><img src="assets/img/old/Geographic.gif" />Geographic</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('InjectionSite'); return false;" ><img src="assets/img/old/InjectionSite.gif" />InjectionSite</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('RPERip'); return false;" ><img src="assets/img/old/RPERip.gif" />RPERip</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('DrainageSite'); return false;" ><img src="assets/img/old/DrainageSite.gif" />DrainageSite</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ChandelierSingle'); return false;" ><img src="assets/img/old/ChandelierSingle.gif" />ChandelierSingle</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
 <!---->
 
 <button class="imgbutton" onclick="print();" ><img src="assets/img/old/Save.gif" />Diagnosis</button>
