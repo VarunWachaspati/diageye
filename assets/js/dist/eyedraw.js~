@@ -1674,14 +1674,14 @@ ED.Drawing.prototype.hideTooltip = function() {
 ED.Drawing.prototype.moveToFront = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.lastSelectedDoodle != null) {
+	if (this.selectedDoodle != null) {
 
-		if (this.lastSelectedDoodle.isLocked) {
+		if (this.selectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign large number to selected doodle
-		this.lastSelectedDoodle.order = 1000;
+		this.selectedDoodle.order = 1000;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -1707,14 +1707,14 @@ ED.Drawing.prototype.moveToFront = function() {
 ED.Drawing.prototype.moveToBack = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.lastSelectedDoodle !== null) {
+	if (this.selectedDoodle !== null) {
 
-		if (this.lastSelectedDoodle.isLocked) {
+		if (this.selectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign negative order to selected doodle
-		this.lastSelectedDoodle.order = -1;
+		this.selectedDoodle.order = -1;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -2066,8 +2066,8 @@ ED.Drawing.prototype.deleteDoodleOfId = function(_id) {
  */
 ED.Drawing.prototype.lock = function() {
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.lastSelectedDoodle !== null) {
-		this.lastSelectedDoodle.isLocked = true;
+	if (this.selectedDoodle !== null) {
+		this.selectedDoodle.isLocked = true;
 		this.notify("doodleLocked");
 		this.repaint();
 	}
