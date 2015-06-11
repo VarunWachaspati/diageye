@@ -72,6 +72,7 @@ text-decoration: underline;
                     switch (_messageArray['eventName']){
                         case 'ready':
                             _drawing.addDoodle('Fundus');
+                            _drawing.addDoodle('PostPole');
                             //_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
 							
 
@@ -159,8 +160,8 @@ text-decoration: underline;
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-
-        saveInput.innerHTML+=", ";
+        if (drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
+        
     }
 
     }
@@ -179,7 +180,7 @@ text-decoration: underline;
 -->
 
 <section>
-<h1>Retinal Tool</h1>
+<h1><u>Posterior Pole Tool (OS)</u></h1>
 <canvas id="canvasEdit" class="ed-canvas-edit" width="470" height="470" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
 
 </section>
@@ -201,168 +202,21 @@ text-decoration: underline;
 
 <!--<button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
 -->
-<strong><h3><u>Retinal Anotations</u></h3></strong>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularDystrophy'); return false;" ><img src="assets/img/old/MacularDystrophy.gif" />MacularDystrophy</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ILMPeel'); return false;" ><img src="assets/img/old/ILMPeel.gif" />ILMPeel</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DrainageRetinotomy'); return false;" ><img src="assets/img/old/DrainageRetinotomy.gif" />DrainageRetinotomy</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('EpiretinalMembrane'); return false;" ><img src="assets/img/old/EpiretinalMembrane.gif" />EpiretinalMembrane</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AntPVR'); return false;" ><img src="assets/img/old/AntPVR.gif" />AntPVR</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PostPole'); return false;" ><img src="assets/img/old/RightPostPole.gif" />PostPole</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('EncirclingBand'); return false;" ><img src="assets/img/old/Buckle.gif" />EncirclingBand</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LaserDemarcation'); return false;" ><img src="assets/img/old/LaserDemarcation.gif" />LaserDemarcation</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CircumferentialBuckle'); return false;" ><img src="assets/img/old/CircumferentialBuckle.gif" />CircumferentialBuckle</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Sclerostomy'); return false;" ><img src="assets/img/old/Sclerostomy.gif" />Sclerostomy</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BuckleSuture'); return false;" ><img src="assets/img/old/BuckleSuture.gif" />BuckleSuture</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('UTear'); return false;" ><img src="assets/img/old/UTear.gif" />UTear</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Cryo'); return false;" ><img src="assets/img/old/Cryo.gif" />Cryo</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RRD'); return false;" ><img src="assets/img/old/RRD.gif" />RRD</button>
+<strong><h3><u>PostPole Anotations</u></h3></strong>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SectorPRP'); return false;" ><img src="assets/img/old/SectorPRP.gif" />SectorPRP</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChandelierDouble'); return false;" ><img src="assets/img/old/ChandelierDouble.gif" />ChandelierDouble</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Dialysis'); return false;" ><img src="assets/img/old/Dialysis.gif" />Dialysis</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalTouch'); return false;" ><img src="assets/img/old/RetinalTouch.gif" />RetinalTouch</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorRetinectomy'); return false;" ><img src="assets/img/old/PosteriorRetinectomy.gif" />PosteriorRetinectomy</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('GRT'); return false;" ><img src="assets/img/old/GRT.gif" />GRT</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IatrogenicBreak'); return false;" ><img src="assets/img/old/IatrogenicBreak.gif" />IatrogenicBreak</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RoundHole'); return false;" ><img src="assets/img/old/RoundHole.gif" />RoundHole</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SubretinalPFCL'); return false;" ><img src="assets/img/old/SubretinalPFCL.gif" />SubretinalPFCL</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PeripheralRetinectomy'); return false;" ><img src="assets/img/old/PeripheralRetinectomy.gif" />PeripheralRetinectomy</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LaserCircle'); return false;" ><img src="assets/img/old/LaserCircle.gif" />LaserCircle</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('EntrySiteBreak'); return false;" ><img src="assets/img/old/EntrySiteBreak.gif" />EntrySiteBreak</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('StarFold'); return false;" ><img src="assets/img/old/StarFold.gif" />StarFold</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SubretinalFluid'); return false;" ><img src="assets/img/old/SubretinalFluid.gif" />SubretinalFluid</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RPEDetachment'); return false;" ><img src="assets/img/old/RPEDetachment.gif" />RPEDetachment</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('FocalLaser'); return false;" ><img src="assets/img/old/FocalLaser.gif" />FocalLaser</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('VitreousOpacity'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousOpacity</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DiscHaemorrhage'); return false;" ><img src="assets/img/old/DiscHaemorrhage.gif" />DiscHaemorrhage</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('HardExudate'); return false;" ><img src="assets/img/old/HardExudate.gif" />HardExudate</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LaserSpot'); return false;" ><img src="assets/img/old/LaserSpot.gif" />LaserSpot</button>
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SectorPRPPostPole'); return false;" ><img src="assets/img/old/SectorPRPPostPole.gif" />SectorPRPPostPole</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChoroidalHaemorrhage'); return false;" ><img src="assets/img/old/ChoroidalHaemorrhage.gif" />ChoroidalHaemorrhage</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Papilloedema'); return false;" ><img src="assets/img/old/Papilloedema.gif" />Papilloedema</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SwollenDisc'); return false;" ><img src="assets/img/old/SwollenDisc.gif" />SwollenDisc</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularGrid'); return false;" ><img src="assets/img/old/MacularGrid.gif" />MacularGrid</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('BlotHaemorrhage'); return false;" ><img src="assets/img/old/BlotHaemorrhage.gif" />BlotHaemorrhage</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Circinate'); return false;" ><img src="assets/img/old/Circinate.gif" />Circinate</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PreRetinalHaemorrhage'); return false;" ><img src="assets/img/old/PreRetinalHaemorrhage.gif" />PreRetinalHaemorrhage</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('OpticDiscPit'); return false;" ><img src="assets/img/old/OpticDiscPit.gif" />OpticDiscPit</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularHole'); return false;" ><img src="assets/img/old/MacularHole.gif" />MacularHole</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Telangiectasis'); return false;" ><img src="assets/img/old/Telangiectasis.gif" />Telangiectasis</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('TractionRetinalDetachment'); return false;" ><img src="assets/img/old/TractionRetinalDetachment.gif" />TractionRetinalDetachment</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DiabeticNV'); return false;" ><img src="assets/img/old/DiabeticNV.gif" />DiabeticNV</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('HardDrusen'); return false;" ><img src="assets/img/old/HardDrusen.gif" />HardDrusen</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IRMA'); return false;" ><img src="assets/img/old/IRMA.gif" />IRMA</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Macroaneurysm'); return false;" ><img src="assets/img/old/Macroaneurysm.gif" />Macroaneurysm</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Microaneurysm'); return false;" ><img src="assets/img/old/Microaneurysm.gif" />Microaneurysm</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalArteryOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalArteryOcclusionPostPole.gif" />RetinalArteryOcclusionPostPole</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/CottonWoolSpot.gif" />CottonWoolSpot</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CystoidMacularOedema'); return false;" ><img src="assets/img/old/CystoidMacularOedema.gif" />CystoidMacularOedema</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChoroidalNaevus'); return false;" ><img src="assets/img/old/ChoroidalNaevus.gif" />ChoroidalNaevus</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('MacularThickening'); return false;" ><img src="assets/img/old/MacularThickening.gif" />MacularThickening</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('FibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />FibrousProliferation</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CNV'); return false;" ><img src="assets/img/old/CNV.gif" />CNV</button>
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalVeinOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalVeinOcclusionPostPole.gif" />RetinalVeinOcclusionPostPole</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DiscPallor'); return false;" ><img src="assets/img/old/DiscPallor.gif" />DiscPallor</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Geographic'); return false;" ><img src="assets/img/old/Geographic.gif" />Geographic</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('InjectionSite'); return false;" ><img src="assets/img/old/InjectionSite.gif" />InjectionSite</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('RPERip'); return false;" ><img src="assets/img/old/RPERip.gif" />RPERip</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('DrainageSite'); return false;" ><img src="assets/img/old/DrainageSite.gif" />DrainageSite</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ChandelierSingle'); return false;" ><img src="assets/img/old/ChandelierSingle.gif" />ChandelierSingle</button>
-
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
 </aside>
 <!---->
 <br/>
-
-<!--**Retina Image Canvas**
-<canvas id="can" class="ed-canvas-edit" width="400" height="400"></canvas>
--->
-
-
-<!--<select id="gradeSelect">
- <option value="None" selected="selected">None</option>
- <option value="Mild" >Mild</option>
- <option value="Moderate">Moderate</option>
- <option value="White">White</option>
-</select>-->
-
-
-<!--<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>-->
 <h2 id="diag-title">Diagnosis</h2>
 <textarea rows="4" cols="180" id="saveInput"></textarea>
 
