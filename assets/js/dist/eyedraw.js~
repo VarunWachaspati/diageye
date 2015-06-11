@@ -1674,14 +1674,14 @@ ED.Drawing.prototype.hideTooltip = function() {
 ED.Drawing.prototype.moveToFront = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle != null) {
+	if (this.lastSelectedDoodle != null) {
 
-		if (this.selectedDoodle.isLocked) {
+		if (this.lastSelectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign large number to selected doodle
-		this.selectedDoodle.order = 1000;
+		this.lastSelectedDoodle.order = 1000;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -1707,14 +1707,14 @@ ED.Drawing.prototype.moveToFront = function() {
 ED.Drawing.prototype.moveToBack = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle !== null) {
+	if (this.lastSelectedDoodle !== null) {
 
-		if (this.selectedDoodle.isLocked) {
+		if (this.lastSelectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign negative order to selected doodle
-		this.selectedDoodle.order = -1;
+		this.lastSelectedDoodle.order = -1;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -2066,8 +2066,8 @@ ED.Drawing.prototype.deleteDoodleOfId = function(_id) {
  */
 ED.Drawing.prototype.lock = function() {
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle !== null) {
-		this.selectedDoodle.isLocked = true;
+	if (this.lastSelectedDoodle !== null) {
+		this.lastSelectedDoodle.isLocked = true;
 		this.notify("doodleLocked");
 		this.repaint();
 	}
@@ -33000,7 +33000,7 @@ ED.PreRetinalHaemorrhage.prototype.draw = function(_point) {
  * @returns {String} Group description
  */
 ED.PreRetinalHaemorrhage.prototype.groupDescription = function() {
-	return "Pre-retinal haemorrages";
+	return "Pre-retinal haemorrhages";
 }
 
 /**

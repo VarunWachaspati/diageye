@@ -2,6 +2,33 @@
 <html>
 <head>
     <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
+    <style type="text/css">
+    aside {
+    line-height:20px;
+    background-color:#eeeeee;
+    height:600px;
+    width:850px;
+    float:right;
+    padding:1px;          
+}
+    section {
+    position: relative;
+    bottom: 26px;
+    width:290px;
+    float:left;
+    padding:1px;        
+}
+    button {
+    width:80;
+    height:80;
+}
+    #diag-title {
+position: relative;
+bottom: -535px;
+left: -290px;
+text-decoration: underline;
+}
+    </style>
     <script src="assets/js/dist/eyedraw.js" type="text/javascript"></script>
 
     <!--<script type="text/javascript">
@@ -38,9 +65,7 @@
                 drawingEdit.init();}
             function eyeDrawController(_drawing){
                 this.callBack = callBack;
-                function click(){
-                            alert(_drawing.doodleArray[1].description());
-                            }
+
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
                 _drawing.showDoodleControls = false;
                 function callBack(_messageArray){
@@ -137,31 +162,46 @@
 
         saveInput.innerHTML+=", ";
     }
-        saveInput.innerHTML+="SnoMed Code:";
-        saveInput.innerHTML+=drawingEdit.diagnosis();
+
     }
+
+
 </script>
-   
+<script type="text/javascript">
+    function delete(){
+
+    }
+</script>   
 </head>
 <body onload="init();">
 <!--**Cortical Cataract Membrane button**
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" /></button>
 -->
-<canvas id="canvasEdit" class="ed-canvas-edit" width="400" height="400" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
-<br>
-<br>
-<button class="imgbutton" onclick="print();" ><img src="assets/img/old/Save.gif" />Diagnosis</button>
+
+<section>
+<h1>Retinal Tool</h1>
+<canvas id="canvasEdit" class="ed-canvas-edit" width="470" height="470" style="poistion:relative; margin-left: auto; margin-right: auto;"></canvas>
+
+</section>
+
+<aside>
+<button class="imgbutton" onclick="print();"><img src="assets/img/old/Save.gif" />Save</button>
+<button class="imgbutton" onclick="drawingEdit.deleteSelectedDoodle();"><img src="assets/img/icons/32x32/manipulate/delete.png" />Delete</button>
+
+<button class="imgbutton" onclick="drawingEdit.deleteAllDoodles();"><img src="assets/img/icons/32x32/manipulate/delete.png" />DeleteAll</button>
 <button class="imgbutton" onclick="drawingEdit.moveToFront();" ><img src="assets/img/icons/32x32/manipulate/move-to-front.png" />MoveToFront</button>
 
 <button class="imgbutton" onclick="drawingEdit.moveToBack();" ><img src="assets/img/icons/32x32/manipulate/move-to-back.png" />MoveToBack</button>
-<button class="imgbutton" onclick="drawingEdit.flipVer();" ><img src="assets/img/old/flipVer.gif" />FlipVertically</button>
+<!--<button class="imgbutton" onclick="drawingEdit.flipVer();" ><img src="assets/img/old/flipVer.gif" />FlipVertically</button>
 <button class="imgbutton" onclick="drawingEdit.flipHor();" ><img src="assets/img/old/flipHor.gif" />FlipHorizontally</button>
-
+-->
 <button class="imgbutton" onclick="drawingEdit.lock();" ><img src="assets/img/icons/32x32/draw/old/lock.png" />Lock</button>
 
 <button class="imgbutton" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
 
-<h3>Retina Tools</h3>
+<!--<button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
+-->
+<strong><h3><u>Retinal Anotations</u></h3></strong>
 <button class="imgbutton" onclick="drawingEdit.addDoodle('MacularDystrophy'); return false;" ><img src="assets/img/old/MacularDystrophy.gif" />MacularDystrophy</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ILMPeel'); return false;" ><img src="assets/img/old/ILMPeel.gif" />ILMPeel</button>
@@ -305,6 +345,7 @@
 
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
+</aside>
 <!---->
 <br/>
 
@@ -322,8 +363,9 @@
 
 
 <!--<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>-->
-<h3>Diagnosis</h3>
+<h2 id="diag-title">Diagnosis</h2>
 <textarea rows="4" cols="180" id="saveInput"></textarea>
+
 </body>
 
 </html>

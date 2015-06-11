@@ -1921,8 +1921,8 @@ ED.Drawing.prototype.deleteDoodle = function(_doodle, really) {
  */
 ED.Drawing.prototype.deleteSelectedDoodle = function() {
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle != null) {
-		this.deleteDoodle(this.selectedDoodle,false);
+	if (this.lastSelectedDoodle != null) {
+		this.deleteDoodle(this.lastSelectedDoodle,false);
 	} else {
 		ED.errorHandler('ED.Drawing', 'deleteSelectedDoodle', 'Attempt to delete selected doodle, when none selected');
 	}
@@ -33000,7 +33000,7 @@ ED.PreRetinalHaemorrhage.prototype.draw = function(_point) {
  * @returns {String} Group description
  */
 ED.PreRetinalHaemorrhage.prototype.groupDescription = function() {
-	return "Pre-retinal haemorrages";
+	return "Pre-retinal haemorrhages";
 }
 
 /**
