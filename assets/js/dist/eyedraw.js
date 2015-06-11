@@ -20462,7 +20462,7 @@ ED.CystoidMacularOedema.prototype.setHandles = function() {
  * Sets default dragging attributes
  */
 ED.CystoidMacularOedema.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 	this.isUnique = true;
 
@@ -27867,7 +27867,7 @@ ED.MacularGrid.prototype.setHandles = function() {
  * Set default properties
  */
 ED.MacularGrid.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 	this.isUnique = true;
 	this.addAtBack = true;
@@ -28026,7 +28026,7 @@ ED.MacularHole.prototype.setHandles = function() {
  * Sets default properties
  */
 ED.MacularHole.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 	this.isUnique = true;
 

@@ -27680,7 +27680,7 @@ ED.MacularDystrophy.prototype.setHandles = function() {
  * Sets default properties
  */
 ED.MacularDystrophy.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 	this.isUnique = true;
 
