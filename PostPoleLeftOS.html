@@ -160,7 +160,7 @@ text-decoration: underline;
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-        if (drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
+        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
         
     }
 
@@ -168,10 +168,6 @@ text-decoration: underline;
 
 
 </script>
-<script type="text/javascript">
-    function delete(){
-
-    }
 </script>   
 </head>
 <body onload="init();">

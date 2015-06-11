@@ -19,8 +19,8 @@
     padding:1px;        
 }
     button {
-    width:80;
-    height:80;
+    
+    
 }
     #diag-title {
 position: relative;
@@ -160,19 +160,14 @@ text-decoration: underline;
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
         saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-        if (drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
+        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
         
     }
 
     }
 
 
-</script>
-<script type="text/javascript">
-    function delete(){
-
-    }
-</script>   
+</script>  
 </head>
 <body onload="init();">
 <!--**Cortical Cataract Membrane button**
