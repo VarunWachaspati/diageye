@@ -41847,7 +41847,7 @@ ED.VitreousOpacity.prototype.draw = function(_point) {
 
 	// Opacity from apexY
 	var opacity = 0.3 + 0.6 * (ro + 2 * this.apexY) / ro;
-	ctx.fillStyle = "rgba(255, 0, 0," + opacity + ")";
+	ctx.fillStyle = "rgba(0, 255, 81," + opacity + ")";
 
 	// Set attributes
 	ctx.lineWidth = 0;
