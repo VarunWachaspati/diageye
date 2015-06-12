@@ -5023,20 +5023,20 @@ ED.Doodle.prototype.locationRelativeToDisc = function() {
 
 	// Right eye
 	if (this.drawing.eye == ED.eye.Right) {
-		if (this.originX > 180 && this.originX < 420 && this.originY > -120 && this.originY < 120) {
+		if (this.originX > -50 && this.originX < 50 && this.originY > -50 && this.originY < 50) {
 			locationString = "at the disc";
 		} else {
 			locationString += this.originY <= 0 ? "supero" : "infero";
-			locationString += this.originX <= 300 ? "temporally" : "nasally";
+			locationString += this.originX <= 0 ? "temporally" : "nasally";
 		}
 	}
 	// Left eye
 	else {
-		if (this.originX < -180 && this.originX > -420 && this.originY > -120 && this.originY < 120) {
+		if (this.originX > -50 && this.originX < 50 && this.originY > -50 && this.originY < 50) {
 			locationString = "at the disc";
 		} else {
 			locationString += this.originY <= 0 ? "supero" : "infero";
-			locationString += this.originX >= -300 ? "temporally" : "nasally";
+			locationString += this.originX >= 0 ? "temporally" : "nasally";
 		}
 	}
 
@@ -34893,24 +34893,13 @@ ED.RetinalTouch.prototype.setParameterDefaults = function() {
 	this.setOriginWithDisplacements(140, 100);
 }
 
-
-/**
- * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
- *
- * @returns {String} Group description
- */
-ED.RetinalTouch.prototype.groupDescription = function() {
-	return "Retinal Touch ";
-}
-
 /**
  * Returns a string containing a text description of the doodle
  *
  * @returns {String} Description of doodle
  */
 ED.RetinalTouch.prototype.description = function() {
-	var returnString = this.locationRelativeToFovea();
-	return returnString;
+	return "Retinal Touch in " + this.quadrant();
 }
 
 
