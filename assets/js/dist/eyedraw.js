@@ -14217,7 +14217,22 @@ ED.AntPVR.prototype.draw = function(_point) {
 }
 
 ED.AntPVR.prototype.description = function() {
-	return "Anterior PVR";
+	returnString =  "Anterior PVR ";
+
+		// Use trigonometry on rotation field to get clock hour of start (0.2618 is PI/12)
+	var start = this.rotation - this.arc / 2;
+	var clockHour = Math.floor((((start + 0.2618) * 6 / Math.PI) + 12) % 12);
+	if (clockHour == 0) clockHour = 12;
+
+	// Get extent of tear in degrees
+	var extent = (this.arc * 180 / Math.PI);
+
+	// Round to nearest 10
+	extent = 10 * Math.floor((extent + 5) / 10);
+
+	returnString = returnString + extent + " degrees clockwise from " + clockHour + " o'clock";
+
+	return returnString;
 }
 
 
