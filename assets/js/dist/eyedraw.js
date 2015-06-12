@@ -21565,7 +21565,7 @@ ED.EncirclingBand.prototype.draw = function(_point) {
 	ED.EncirclingBand.superclass.draw.call(this, _point);
 
 	// Radii
-	var r = 270;
+	var r = 438;
 	// If Buckle there, take account of  size
 	var doodle = this.drawing.lastDoodleOfClass("CircumferentialBuckle");
 	if (doodle) {
@@ -36502,6 +36502,14 @@ ED.SectorPRP.prototype.setParameterDefaults = function() {
 	} else {
 		this.rotation = (this.drawing.eye == ED.eye.Right ? -1 : 1) * this.arc / 2;
 	}
+}
+
+/*Description function for SectorPRP
+ *
+*/
+ED.SectorPRP.prototype.description = function(){
+	return "Sector PRP ";
+
 }
 
 /**
