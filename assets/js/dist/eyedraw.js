@@ -29855,8 +29855,8 @@ ED.OpticDiscPit.prototype.setPropertyDefaults = function() {
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['originX']['range'].setMinAndMax(-200, +200);
 	this.parameterValidationArray['originY']['range'].setMinAndMax(-240, +240);
-	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +3);
-	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +3);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.2, +3);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.2, +3);
 }
 
 /**
