@@ -34872,6 +34872,27 @@ ED.RetinalTouch.prototype.setParameterDefaults = function() {
 	this.setOriginWithDisplacements(140, 100);
 }
 
+
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.RetinalTouch.prototype.groupDescription = function() {
+	return "Retinal Touch ";
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.RetinalTouch.prototype.description = function() {
+	var returnString = this.locationRelativeToFovea();
+	return returnString;
+}
+
+
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
  *
