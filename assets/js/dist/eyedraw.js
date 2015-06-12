@@ -16036,6 +16036,27 @@ ED.BuckleSuture.prototype.setParameterDefaults = function() {
 	this.setRotationWithDisplacements(30, 30);
 }
 
+
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.BuckleSuture.prototype.groupDescription = function() {
+	return "Buckle Suture at ";
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.BuckleSuture.prototype.description = function() {
+	// Location (clockhours)
+	return this.clockHour() + " o'clock";
+}
+
+
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
  *
