@@ -29315,7 +29315,7 @@ ED.OpticDisc.prototype.setPropertyDefaults = function() {
 
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(-320, -20);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-300, -20);
 	this.parameterValidationArray['radius']['range'].setMinAndMax(50, 290);
 
 	// Add complete validation arrays for derived parameters
