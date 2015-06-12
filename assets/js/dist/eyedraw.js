@@ -16028,11 +16028,11 @@ ED.BuckleSuture.prototype.draw = function(_point) {
 	ED.BuckleSuture.superclass.draw.call(this, _point);
 
 	// If Buckle there, take account of  size
-	var ro = 340;
+	var ro = 470;
 	var doodle = this.drawing.lastDoodleOfClass("CircumferentialBuckle");
 	if (doodle) ro = -doodle.apexY + 20;
 
-	var ri = 200;
+	var ri = 330;
 
 	// Calculate parameters for arcs
 	var theta = this.arc / 2;
@@ -17671,10 +17671,10 @@ ED.CircumferentialBuckle.prototype.draw = function(_point) {
 	ED.CircumferentialBuckle.superclass.draw.call(this, _point);
 
 	// Radii
-	var ro = 320;
-	if (-350 > this.apexY && this.apexY > -380) ro = 350;
-	else if (this.apexY < -380) ro = 410;
-	var ri = 220;
+	var ro = 350;
+	if (-330 > this.apexY && this.apexY > -350) ro = 380;
+	else if (this.apexY < -350) ro = 440;
+	var ri = 250;
 	var r = ri + (ro - ri) / 2;
 
 	// Calculate parameters for arcs
