@@ -28220,7 +28220,7 @@ ED.MacularThickening.prototype.setHandles = function() {
  */
 ED.MacularThickening.prototype.setPropertyDefaults = function() {
 	// Update component of validation array for simple parameters
-	this.parameterValidationArray['apexX']['range'].setMinAndMax(+100, +400);
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(+80, +400);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0, +0);
 }
 
