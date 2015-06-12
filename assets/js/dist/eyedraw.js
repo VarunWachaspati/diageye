@@ -14216,6 +14216,12 @@ ED.AntPVR.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
+ED.AntPVR.prototype.description = function() {
+	return "Anterior PVR";
+}
+
+
+
 /**
  * Returns the SnoMed code of the doodle
  *
@@ -21694,6 +21700,18 @@ ED.EntrySiteBreak.prototype.setParameterDefaults = function() {
 	this.arc = Math.PI / 8;
 	this.setRotationWithDisplacements(60, -120);
 }
+
+ED.EntrySiteBreak.prototype.description = function() {
+	var returnString = "";
+
+	// U tear
+	returnString += "Entry Site Break at ";
+	// Location (clockhours)
+	returnString += this.clockHour() + " o'clock";
+
+	return returnString;
+}
+
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
