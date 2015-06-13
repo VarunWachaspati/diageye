@@ -21005,14 +21005,14 @@ ED.DiscHaemorrhage.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
 	//added 
 	this.isArcSymmetrical = false;
-	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 28, 7 * Math.PI / 20);
+	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 30, 7 * Math.PI / 20);
 }
 
 /**
  * Sets default parameters
  */
 ED.DiscHaemorrhage.prototype.setParameterDefaults = function() {
-	this.arc = 5 * Math.PI / 28;
+	this.arc = 1.3 * Math.PI / 28;
 	this.setRotationWithDisplacements(150, -120);
 	
 }
