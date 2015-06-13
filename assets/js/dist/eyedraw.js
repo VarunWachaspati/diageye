@@ -20909,13 +20909,7 @@ ED.Dialysis.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
-
-/**
- * Returns a string containing a text description of the doodle
- *
- * @returns {String} Description of doodle
- */
-ED.Dialysis.prototype.description = function() {
+ED.Dialysis.prototype.groupDescription = function() {
 	var returnString = "";
 
 	// Size description
@@ -20924,8 +20918,18 @@ ED.Dialysis.prototype.description = function() {
 
 	// U tear
 	returnString += "dialysis ";
+return returnString;
 
+}
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.Dialysis.prototype.description = function() {
+	var returnString="";
 	// Location (clockhours)
+	
 	returnString += this.clockHour() + " o'clock";
 
 	return returnString;
@@ -23175,13 +23179,17 @@ ED.GRT.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
+ED.GRT.prototype.groupDescription = function() {
+	var returnString = "Giant Retinal Tear ";
+	return returnString;
+}
 /**
  * Returns a string containing a text description of the doodle
  *
  * @returns {String} Description of doodle
  */
 ED.GRT.prototype.description = function() {
-	var returnString = "Giant Retinal Tear ";
+	var returnString = "";
 
 	// Use trigonometry on rotation field to get clock hour of start (0.2618 is PI/12)
 	var start = this.rotation - this.arc / 2;
@@ -28781,7 +28789,7 @@ ED.NerveFibreDefect.prototype.draw = function(_point) {
 
 	// Radius of outer curve
 	var ro = -this.apexY;
-	var ri = 320; //reduced by 40 @author:Varun
+	var ri = 300; //reduced by 60 @author:Varun
 	var r = ri + (ro - ri) / 2;
 
 	// Calculate parameters for arcs
@@ -30751,7 +30759,7 @@ ED.PeripapillaryAtrophy.prototype.setPropertyDefaults = function() {
 	this.handleCoordinateRangeArray = new Array();
 
 	var max = this.outerRadius * 1.4;
-	var min = this.outerRadius * 0.932;// mutiplied by a factor of 0.932, earlier the factor was 1 @author: Varun
+	var min = this.outerRadius * 0.87;// mutiplied by a factor of 0.932, earlier the factor was 1 @author: Varun
 	this.handleCoordinateRangeArray[0] = {
 		x: new ED.Range(-max, -min),
 		y: new ED.Range(-0, +0)
@@ -41142,7 +41150,9 @@ ED.UTear.prototype.groupDescription = function() {
  * @returns {String} Description of doodle
  */
 ED.UTear.prototype.description = function() {
-	return this.clockHour();
+	var returnString = "";
+	returnString+= this.clockHour() + " o'clock";
+	return returnString;
 }
 
 /**
@@ -41151,7 +41161,7 @@ ED.UTear.prototype.description = function() {
  * @returns {String} Description of doodle
  */
 ED.UTear.prototype.groupDescriptionEnd = function() {
-	return " o'clock";
+	return "";
 }
 
 /**

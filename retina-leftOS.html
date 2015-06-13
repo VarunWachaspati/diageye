@@ -151,26 +151,39 @@ left: -290px;
 <script type="text/javascript">
     //Script to print out Diagnosis Description of all doodles on the canvas 
     function print(){
-    var saveInput = document.getElementById('saveInput');
-    saveInput.innerHTML = "";
-    for(var i=1;i<drawingEdit.doodleArray.length;i++){
-        if (i>1) {
-        if (drawingEdit.doodleArray[i-1].className!=drawingEdit.doodleArray[i].className ){
-        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
-        saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
-        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
-        }}else{
-            saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
-        saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
-        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {saveInput.innerHTML+=", ";};
-        }
+        var saveInput = document.getElementById('saveInput');
+        saveInput.innerHTML = "";
+    
+        for(var i=1;i<drawingEdit.doodleArray.length;i++){
+            if (i>1) {
+            
+                if (drawingEdit.doodleArray[i-1].className!=drawingEdit.doodleArray[i].className ){
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                    if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                        saveInput.innerHTML+=", ";
+                    };
+                }
+                else if(drawingEdit.doodleArray[i-1].className==drawingEdit.doodleArray[i].className && drawingEdit.doodleArray[i].description().search("clock")!= -1){
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                    if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                        saveInput.innerHTML+=", ";
+                    };   
+                }
+            
+            }
+            else{
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                    saveInput.innerHTML+=", ";
+                };
+            }   
+       }
     }
-
-    }
-
-
 </script>
    
 </head>
