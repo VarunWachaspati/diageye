@@ -20984,10 +20984,11 @@ ED.DiscHaemorrhage = function(_drawing, _parameterJSON) {
 	this.className = "DiscHaemorrhage";
 
 	// Saved parameters
-	this.savedParameterArray = ['rotation'];
+	this.savedParameterArray = ['arc','rotation'];
 	
 	// Call super-class constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
+
 }
 
 /**
@@ -21002,14 +21003,26 @@ ED.DiscHaemorrhage.superclass = ED.Doodle.prototype;
  */
 ED.DiscHaemorrhage.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
+	//added 
+	this.isArcSymmetrical = false;
+	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 28, 7 * Math.PI / 20);
 }
 
 /**
  * Sets default parameters
  */
 ED.DiscHaemorrhage.prototype.setParameterDefaults = function() {
+	this.arc = 5 * Math.PI / 28;
 	this.setRotationWithDisplacements(150, -120);
+	
 }
+//added this function
+ED.DiscHaemorrhage.prototype.setHandles = function() {
+	this.handleArray[0] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
+	this.handleArray[3] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
+}
+
+
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
@@ -21029,7 +21042,7 @@ ED.DiscHaemorrhage.prototype.draw = function(_point) {
 	var r = ri + (ro - ri) / 2;
 
 	// Calculate parameters for arcs
-	var theta = 5 * Math.PI / 180;
+	var theta = this.arc / 2;
 	var arcStart = -Math.PI / 2 + theta;
 	var arcEnd = -Math.PI / 2 - theta;
 
@@ -21059,6 +21072,8 @@ ED.DiscHaemorrhage.prototype.draw = function(_point) {
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
+	this.handleArray[0].location = this.transform.transformPoint(new ED.Point(topLeftX, topLeftY));
+	this.handleArray[3].location = this.transform.transformPoint(new ED.Point(topRightX, topRightY));
 	// Draw handles if selected
 	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
 
