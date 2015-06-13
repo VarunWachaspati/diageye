@@ -28781,7 +28781,7 @@ ED.NerveFibreDefect.prototype.draw = function(_point) {
 
 	// Radius of outer curve
 	var ro = -this.apexY;
-	var ri = 360;
+	var ri = 320; //reduced by 40 @author:Varun
 	var r = ri + (ro - ri) / 2;
 
 	// Calculate parameters for arcs
@@ -30709,7 +30709,7 @@ ED.PeripapillaryAtrophy = function(_drawing, _parameterJSON) {
 	this.className = "PeripapillaryAtrophy";
 
 	// Private parameters
-	this.outerRadius = 340;
+	this.outerRadius = 320;// reduced by 0 @author: Varun
 
 	// Saved parameters
 	this.savedParameterArray = ['rotation'];
@@ -30751,7 +30751,7 @@ ED.PeripapillaryAtrophy.prototype.setPropertyDefaults = function() {
 	this.handleCoordinateRangeArray = new Array();
 
 	var max = this.outerRadius * 1.4;
-	var min = this.outerRadius;
+	var min = this.outerRadius * 0.932;// mutiplied by a factor of 0.932, earlier the factor was 1 @author: Varun
 	this.handleCoordinateRangeArray[0] = {
 		x: new ED.Range(-max, -min),
 		y: new ED.Range(-0, +0)
