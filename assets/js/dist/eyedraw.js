@@ -29297,7 +29297,7 @@ ED.OpticDisc = function(_drawing, _parameterJSON) {
 	this.numberOfHandles = 8;
 
 	// Derived parameters
-	this.mode = "Basic";
+	this.mode = "Expert";
 	this.cdRatio = '0';
 
 	// Saved parameters
@@ -29389,7 +29389,7 @@ ED.OpticDisc.prototype.setParameterDefaults = function() {
 		this.addPointToSquiggle(point);
 	}
 
-	this.setParameterFromString('mode', 'Basic');
+	this.setParameterFromString('mode', 'Expert');
 	this.setParameterFromString('cdRatio', '0.3');
 }
 
