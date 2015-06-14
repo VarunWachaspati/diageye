@@ -1596,7 +1596,7 @@ ED.Drawing.prototype.showTooltip = function(_point) {
 
 
 	// DISABLED TOOLTIPS AS PART OF #OED-4
-	return;
+	//return;
 
 	// Get coordinates of mouse
 	var xAbs = _point.x;

@@ -4,27 +4,27 @@
     <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
     <style type="text/css">
     aside {
-    line-height:20px;
-    background-color:#eeeeee;
-    height:600px;
-    width:750px;
-    float:right;
-    padding:1px;          
+        line-height:20px;
+        background-color:#eeeeee;
+        height:600px;
+        width:750px;
+        float:right;
+        padding:1px;          
 }
     section {
-    position: relative;
-    bottom: 26px;
-    width:290px;
-    float:left;
-    padding:1px;        
+        position: relative;
+        bottom: 26px;
+        width:290px;
+        float:left;
+        padding:1px;        
 }
     button {
-    font-size: 70%;
+        font-size: 70%;
 }
     #diag-title {
-position: relative;
-bottom: -535px;
-left: -290px;
+        position: relative;
+        bottom: -535px;
+        left: -290px;
 
 }
     </style>
@@ -66,7 +66,7 @@ left: -290px;
                 this.callBack = callBack;
 
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
-                _drawing.showDoodleControls = false;
+                _drawing.showDoodleControls = true;
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
@@ -147,6 +147,9 @@ left: -290px;
         var saveInput = document.getElementById('saveInput');
         saveInput.innerHTML = "";
     
+        saveInput.innerHTML += drawingEdit.doodleArray[0].description();
+        if(drawingEdit.doodleArray.length > 1){saveInput +=" ,"}; 
+
         for(var i=1;i<drawingEdit.doodleArray.length;i++){
             if (i>1) {
             
@@ -380,9 +383,9 @@ left: -290px;
 <!---->
 <br/>
 
-<!--
-<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>
--->
+
+<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 600px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
+
 <h2 id="diag-title">Diagnosis</h2>
 
 <textarea rows="4" cols="164" id="saveInput"></textarea>

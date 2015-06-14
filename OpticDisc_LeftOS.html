@@ -70,7 +70,7 @@
                 this.callBack = callBack;
 
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
-                _drawing.showDoodleControls = false;
+                _drawing.showDoodleControls = true;
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
@@ -210,11 +210,9 @@
  <option value="Moderate">Moderate</option>
  <option value="White">White</option>
 </select>-->
-
 <!--
-<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>
+<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 600px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
 -->
-
 <h2 id="diag-title">Diagnosis</h2>
 <textarea rows="4" cols="164" id="saveInput"></textarea>
 
