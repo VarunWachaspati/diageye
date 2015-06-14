@@ -29301,7 +29301,7 @@ ED.OpticDisc = function(_drawing, _parameterJSON) {
 	this.cdRatio = '0';
 
 // Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'mode':'Mode', 'cdRatio':'C D Ratio',};
+	this.controlParameterArray = {'mode':'Mode : ', 'cdRatio':'C D Ratio : ',};
 
 	// Saved parameters
 	this.savedParameterArray = ['apexY', 'mode'];
