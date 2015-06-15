@@ -14291,7 +14291,7 @@ ED.AntSeg = function(_drawing, _parameterJSON) {
 	// Other parameters
 	this.pxe = false;
 	this.coloboma = false;
-	this.colour = 'Blue';
+	this.colour = 'Brown';
 	this.ectropion = false;
 
 	// Saved parameters
@@ -14367,7 +14367,7 @@ ED.AntSeg.prototype.setPropertyDefaults = function() {
  * Use the setParameter function for derived parameters, as this will also update dependent variables
  */
 ED.AntSeg.prototype.setParameterDefaults = function() {
-	this.setParameterFromString('pupilSize', 'Large');
+	this.setParameterFromString('pupilSize', 'Medium');
 	this.setParameterFromString('pxe', 'false');
 }
 
@@ -21005,7 +21005,7 @@ ED.DiscHaemorrhage.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
 	//added 
 	this.isArcSymmetrical = false;
-	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 30, 7 * Math.PI / 20);
+	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 30,  Math.PI / 4);
 }
 
 /**
@@ -21264,8 +21264,8 @@ ED.DiscPallor.prototype.draw = function(_point) {
 
 	// Set line attributes
 	ctx.lineWidth = 1;
-	ctx.fillStyle = "rgba(255,255,255,0.5)";
-	ctx.strokeStyle = "rgba(255,255,255,0)";
+	ctx.fillStyle = "rgba(255,255,0,0.5)";
+	ctx.strokeStyle = "rgba(0,0,0,0)";
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
@@ -29298,7 +29298,7 @@ ED.OpticDisc = function(_drawing, _parameterJSON) {
 
 	// Derived parameters
 	this.mode = "Expert";
-	this.cdRatio = '0';
+	this.cdRatio = '0.3';
 
 // Parameters in doodle control bar (parameter name: parameter label)
 	this.controlParameterArray = {'mode':'Mode : ', 'cdRatio':'C D Ratio : ',};
@@ -29354,7 +29354,7 @@ ED.OpticDisc.prototype.setPropertyDefaults = function() {
 	this.parameterValidationArray['cdRatio'] = {
 		kind: 'derived',
 		type: 'string',
-		list: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0', 'No view'],
+		list: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0'],
 		animate: true
 	};
 
@@ -29366,7 +29366,7 @@ ED.OpticDisc.prototype.setPropertyDefaults = function() {
 
 		// Create a range object for each handle
 		var range = new Object;
-		range.length = new ED.Range(+50, +290);
+		range.length = new ED.Range(+50, +300);
 		range.angle = new ED.Range(((15 * cir / 16) + i * cir / 8) % cir, ((1 * cir / 16) + i * cir / 8) % cir);
 		this.handleVectorRangeArray[i] = range;
 	}
@@ -30493,7 +30493,7 @@ ED.Papilloedema.prototype.draw = function(_point) {
 	ctx.lineWidth = 0;
 
 	// Colors for gradient
-	yellowColour = "rgba(255, 255, 0, 0.75)";
+	yellowColour = "rgba(69, 155, 247, 0.75)";//RGB = 255,255,0 earlier now changed @author : Varun
 	var brownColour = "rgba(240, 140, 40, 0.75)";
 
 	// Radial gradient
@@ -30735,7 +30735,7 @@ ED.PeripapillaryAtrophy = function(_drawing, _parameterJSON) {
 	this.className = "PeripapillaryAtrophy";
 
 	// Private parameters
-	this.outerRadius = 320;// reduced by 0 @author: Varun
+	this.outerRadius = 320;// 320 reduced by 0 @author: Varun
 
 	// Saved parameters
 	this.savedParameterArray = ['rotation'];
@@ -30776,8 +30776,8 @@ ED.PeripapillaryAtrophy.prototype.setPropertyDefaults = function() {
 	// Create ranges to constrain handles
 	this.handleCoordinateRangeArray = new Array();
 
-	var max = this.outerRadius * 1.4;
-	var min = this.outerRadius * 0.87;// mutiplied by a factor of 0.932, earlier the factor was 1 @author: Varun
+	var max = this.outerRadius * 1.4;//1.4
+	var min = this.outerRadius * 0.94;// mutiplied by a factor of 0.87, earlier the factor was 1 @author: Varun
 	this.handleCoordinateRangeArray[0] = {
 		x: new ED.Range(-max, -min),
 		y: new ED.Range(-0, +0)
@@ -30865,8 +30865,8 @@ ED.PeripapillaryAtrophy.prototype.draw = function(_point) {
 	ctx.bezierCurveTo(-fromY * f, fromY, toX, -toX * f, toX, toY);
 
 	// Only fill to margin, to allow cup to sit behind giving disc margin
-	ctx.moveTo(280, 00);
-	ctx.arc(0, 0, 280, 0, Math.PI * 2, true);
+	ctx.moveTo(300, 00);//changed 280 to 300 @author : Varun 
+	ctx.arc(0, 0, 300, 0, Math.PI * 2, true);//changed 280 to 300 @author : Varun 
 
 	// Close path
 	ctx.closePath();
@@ -38668,7 +38668,7 @@ ED.TrabyConjIncision.prototype.draw = function(_point) {
 	ED.TrabyConjIncision.superclass.draw.call(this, _point);
 
 	// Radius of outer end of radial incision
-	var ro = 660;
+	var ro = 600; // Changed 660 to 600 @author : Varun
 	var ri = 400;
 
 	// Calculate parameters for arcs
@@ -38736,7 +38736,7 @@ ED.TrabyConjIncision.prototype.draw = function(_point) {
  * @returns {String} Description of doodle
  */
 ED.TrabyConjIncision.prototype.description = function() {
-	return "";
+	return "Traby Conjuctival Incision";
 }
 
 /**

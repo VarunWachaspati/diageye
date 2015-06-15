@@ -71,7 +71,7 @@
                     switch (_messageArray['eventName']){
                         case 'ready':
                             _drawing.addDoodle('AntSeg');
-                            _drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
+                            _drawing.addBindings({CorticalCataract:{}});
                             _drawing.addBindings({IrisHook:{}});
                             _drawing.addBindings({LimbalRelaxingIncision:{}});
                             _drawing.addBindings({ConjunctivalSuture:{}});
@@ -132,7 +132,7 @@
                             //_drawing.addBindings({RPERip:{}});
                             //_drawing.addBindings({DrainageSite:{}});
                             //_drawing.addBindings({ChandelierSingle:{}});
-                            _drawing.addDeleteValues({gradeSelect:'None'});
+                            //_drawing.addDeleteValues({gradeSelect:'None'});
                             _drawing.deselectDoodles();
                             break;
             }
@@ -144,43 +144,43 @@
 <script type="text/javascript">
     //Script to print out Diagnosis Description of all doodles on the canvas 
         function print(){
-        var saveInput = document.getElementById('saveInput');
-        saveInput.innerHTML = "";
+            var saveInput = document.getElementById('saveInput');
+            saveInput.innerHTML = "";
     
-        saveInput.innerHTML += drawingEdit.doodleArray[0].description();
-        if(drawingEdit.doodleArray.length > 1){saveInput +=" ,"}; 
-
-        for(var i=1;i<drawingEdit.doodleArray.length;i++){
-            if (i>1) {
+            saveInput.innerHTML += drawingEdit.doodleArray[0].description() + " ";
             
-                if (drawingEdit.doodleArray[i-1].className!=drawingEdit.doodleArray[i].className ){
+            //saveInput.innerHTML +=" "+drawingEdit.doodleArray.length ;
+            for(var i=1 ; i<drawingEdit.doodleArray.length ;i++){
+                //saveInput.innerHTML += "11"; debug
+                if (i>1) {
+                    
+                    if (drawingEdit.doodleArray[i-1].className!=drawingEdit.doodleArray[i].className ){
+                        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
+                        saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                            saveInput.innerHTML+=", ";
+                        };
+                    }
+                    else if(drawingEdit.doodleArray[i-1].className==drawingEdit.doodleArray[i].className && drawingEdit.doodleArray[i].description().search("clock")!= -1){
+                        saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
+                        saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
+                        if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
+                        saveInput.innerHTML+=", ";
+                        };   
+                    }
+                }
+                else{
                     saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
                     saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
                     saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
                     if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
                         saveInput.innerHTML+=", ";
                     };
-                }
-                else if(drawingEdit.doodleArray[i-1].className==drawingEdit.doodleArray[i].className && drawingEdit.doodleArray[i].description().search("clock")!= -1){
-                    saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
-                    saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-                    if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
-                        saveInput.innerHTML+=", ";
-                    };   
-                }
-            
-            }
-            else{
-                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescription();
-                saveInput.innerHTML+=drawingEdit.doodleArray[i].description();
-                saveInput.innerHTML+=drawingEdit.doodleArray[i].groupDescriptionEnd();
-                if (drawingEdit.doodleArray.length -1 != i && drawingEdit.doodleArray.length > 2) {
-                    saveInput.innerHTML+=", ";
-                };
+                }   
             }   
-    }
 
-}
+        }
 
 </script>
    
@@ -242,6 +242,8 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('KrukenbergSpindle'); return false;" ><img src="assets/img/old/KrukenbergSpindle.gif" />KrukenbergSpindle</button>
 
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Fuchs'); return false;" ><img src="assets/img/old/Fuchs.gif" />Fuchs</button>
+
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealInlay'); return false;" ><img src="assets/img/old/CornealInlay.gif" />CornealInlay</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealGraft'); return false;" ><img src="assets/img/old/CornealGraft.gif" />CornealGraft</button>
@@ -250,42 +252,64 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('RK'); return false;" ><img src="assets/img/old/RK.gif" />RK</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" />CorticalCataract</button>
 <!--
 <button class="imgbutton" onclick="drawingEdit.addDoodle('IrisHook'); return false;" ><img src="assets/img/old/IrisHook.gif" />IrisHook</button>
 -->
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('LimbalRelaxingIncision'); return false;" ><img src="assets/img/old/LimbalRelaxingIncision.gif" />LimbalRelaxingIncision</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
+
 <br>
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
 
+<button class="imgbutton" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
 
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('TransilluminationDefect'); return false;" ><img src="assets/img/old/TransilluminationDefect.gif" />TransilluminationDefect</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('IrisNaevus'); return false;" ><img src="assets/img/old/IrisNaevus.gif" />IrisNaevus</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Hyphaema'); return false;" ><img src="assets/img/old/Hyphaema.gif" />Hyphaema</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('TransilluminationDefect'); return false;" ><img src="assets/img/old/TransilluminationDefect.gif" />TransilluminationDefect</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('IrisNaevus'); return false;" ><img src="assets/img/old/IrisNaevus.gif" />IrisNaevus</button>
+
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Rubeosis'); return false;" ><img src="assets/img/old/Rubeosis.gif" />Rubeosis</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CutterPI'); return false;" ><img src="assets/img/old/CutterPI.gif" />CutterPI</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('BusaccaNodule'); return false;" ><img src="assets/img/old/BusaccaNodule.gif" />BusaccaNodule</button>
-
-<br>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('KoeppeNodule'); return false;" ><img src="assets/img/old/KoeppeNodule.gif" />KoeppeNodule</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PI'); return false;" ><img src="assets/img/old/PI.gif" />PeripheralIridectomy</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('CutterPI'); return false;" ><img src="assets/img/old/CutterPI.gif" />CutterPI</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorSynechia'); return false;" ><img src="assets/img/old/PosteriorSynechia.gif" />PosteriorSynechia</button>
+
+<!--
+<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
+-->
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('SectorIridectomy'); return false;" ><img src="assets/img/old/SectorIridectomy.gif" />SectorIridectomy</button>
+
+
+<br>
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('NuclearCataract'); return false;" ><img src="assets/img/old/NuclearCataract.gif" />NuclearCataract</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="assets/img/old/CorticalCataract.gif" />CorticalCataract</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorCapsule'); return false;" ><img src="assets/img/old/PosteriorCapsule.gif" />PosteriorCapsule</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CapsularTensionRing'); return false;" ><img src="assets/img/old/CapsularTensionRing.gif" />CapsularTensionRing</button>
 
@@ -293,12 +317,9 @@
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Supramid'); return false;" ><img src="assets/img/old/Supramid.gif" />Supramid</button>
 -->
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
 
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PostSubcapCataract'); return false;" ><img src="assets/img/old/PostSubcapCataract.gif" />PostSubcapCataract</button>
+
 
 <br>
 
@@ -312,28 +333,15 @@
 
 <br>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PI'); return false;" ><img src="assets/img/old/PI.gif" />PeripheralIridectomy</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('NuclearCataract'); return false;" ><img src="assets/img/old/NuclearCataract.gif" />NuclearCataract</button>
 
 <!--
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ACMaintainer'); return false;" ><img src="assets/img/old/ACMaintainer.gif" />ACMaintainer</button>
 -->
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorSynechia'); return false;" ><img src="assets/img/old/PosteriorSynechia.gif" />PosteriorSynechia</button>
-
-<!--
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AngleNV'); return false;" ><img src="assets/img/old/AngleNV.gif" />AngleNV</button>
--->
 
 
-<button class="imgbutton" onclick="drawingEdit.addDoodle('SectorIridectomy'); return false;" ><img src="assets/img/old/SectorIridectomy.gif" />SectorIridectomy</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('Fuchs'); return false;" ><img src="assets/img/old/Fuchs.gif" />Fuchs</button>
-
-<button class="imgbutton" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('TrabyConjIncision'); return false;" ><img src="assets/img/old/TrabyConjIncision.gif" />TrabyConjIncision</button>
 
@@ -350,6 +358,15 @@
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SidePort'); return false;" ><img src="assets/img/old/SidePort.gif" />SidePort</button>
 -->
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Bleb'); return false;" ><img src="assets/img/old/Bleb.gif" />Bleb</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
+
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
 
 <br>
 <!--
@@ -384,7 +401,7 @@
 <br/>
 
 
-<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 600px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
+<div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 700px; top:505px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;">Controls</div>
 
 <h2 id="diag-title">Diagnosis</h2>
 

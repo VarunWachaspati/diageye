@@ -70,7 +70,7 @@
                 this.callBack = callBack;
 
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
-                _drawing.showDoodleControls = false;
+                _drawing.showDoodleControls = true;
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
@@ -104,6 +104,15 @@
         saveInput.innerHTML += "Total Cupping ";
     }
 
+    if (drawingEdit.doodleArray[0].mode=="Expert") {saveInput.innerHTML+=", "+drawingEdit.doodleArray[0].description();
+    //I should commit suicide for writing the following 2 if conditionals
+    if (((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[0].length() > mean) &&(drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[1].length() > mean))|| ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[0].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[7].length() > mean)) || ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[0].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[1].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[7].length() > mean))) {
+        if (((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[3].length() > mean) &&(drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean))|| ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[5].length() > mean)) || ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[3].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[5].length() > mean))){
+            saveInput.innerHTML += " (Bipolar Notch) ";            
+        }else{ saveInput.innerHTML += " (Superior Notch) ";}
+
+       }else if (((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[3].length() > mean) &&(drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean))|| ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[5].length() > mean)) || ((drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[3].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[4].length() > mean) && (drawingEdit.doodleArray[0].squiggleArray[0].pointsArray[5].length() > mean))) {saveInput.innerHTML += " (Inferior Notch) ";};
+};
     if (drawingEdit.doodleArray.length > 1) {saveInput.innerHTML += ", "};
     for(var i=1;i<drawingEdit.doodleArray.length;i++){
         if (i>1) {
