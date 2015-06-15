@@ -148,7 +148,7 @@
             saveInput.innerHTML = "";
     
             saveInput.innerHTML += drawingEdit.doodleArray[0].description() + " ";
-            
+            if (drawingEdit.doodleArray.length > 1) {saveInput.innerHTML += ","};
             //saveInput.innerHTML +=" "+drawingEdit.doodleArray.length ;
             for(var i=1 ; i<drawingEdit.doodleArray.length ;i++){
                 //saveInput.innerHTML += "11"; debug
