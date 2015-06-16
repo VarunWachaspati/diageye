@@ -14215,10 +14215,15 @@ ED.AntPVR.prototype.draw = function(_point) {
 	// Return value indicating successful hit test
 	return this.isClicked;
 }
+ED.AntPVR.prototype.groupDescription = function() {
 
-ED.AntPVR.prototype.description = function() {
 	returnString =  "Anterior PVR ";
 
+	return returnString;
+}
+
+ED.AntPVR.prototype.description = function() {
+	var returnString = "";
 		// Use trigonometry on rotation field to get clock hour of start (0.2618 is PI/12)
 	var start = this.rotation - this.arc / 2;
 	var clockHour = Math.floor((((start + 0.2618) * 6 / Math.PI) + 12) % 12);
@@ -14268,7 +14273,7 @@ ED.Lattice = function(_drawing, _parameterJSON) {
 	this.className = "Lattice";
 
 	// Saved parameters
-	this.savedParameterArray = ['apexY', 'arc', 'rotation'];
+	this.savedParameterArray = ['apexY', 'arc', 'rotation', 'radius'];
 
 	// Call super-class constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -14287,7 +14292,7 @@ ED.Lattice.superclass = ED.Doodle.prototype;
 ED.Lattice.prototype.setHandles = function() {
 	this.handleArray[0] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
 	this.handleArray[3] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
-	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+	//this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
 }
 
 /**
@@ -14295,13 +14300,15 @@ ED.Lattice.prototype.setHandles = function() {
  */
 ED.Lattice.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
-
+	this.isRotatable = true;
+	this.isScaleable = false;
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(-400, -300);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-440, -440);
 	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.25, +4);
 	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.25, +4);
-	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 9, Math.PI * 2);
+	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 18, Math.PI /6);
+	this.parameterValidationArray['radius']['range'].setMinAndMax(390, 458);
 }
 
 
@@ -14309,9 +14316,10 @@ ED.Lattice.prototype.setPropertyDefaults = function() {
  * Sets default parameters
  */
 ED.Lattice.prototype.setParameterDefaults = function() {
-	this.arc =   Math.PI / 3;
-	this.apexY = -300;
-	this.setRotationWithDisplacements(180, 120);
+	this.arc =   Math.PI / 12;
+	this.apexY = -440;
+	this.radius = 430;
+	this.setRotationWithDisplacements(60, 30);
 }
 
 /**
@@ -14327,8 +14335,9 @@ ED.Lattice.prototype.draw = function(_point) {
 	ED.Lattice.superclass.draw.call(this, _point);
 
 	// Radius of outer curve just inside ora on right and left fundus diagrams
-	var ro = 952 / 2;
-	var ri = -this.apexY;
+	var r = this.radius;
+	var ro = r + 18;
+	var ri = r - 18;
 	var r = ri + (ro - ri) / 2;
 
 	// Calculate parameters for arcs
@@ -14344,7 +14353,7 @@ ED.Lattice.prototype.draw = function(_point) {
 
 	// Boundary path
 	ctx.beginPath();
-
+	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 20);
 	// Arc across to mirror image point on the other side
 	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
 
@@ -14374,10 +14383,15 @@ ED.Lattice.prototype.draw = function(_point) {
 	// Return value indicating successful hit test
 	return this.isClicked;
 }
+ED.Lattice.prototype.groupDescription = function() {
 
-ED.Lattice.prototype.description = function() {
 	returnString =  "Lattice ";
 
+	return returnString;
+}
+
+ED.Lattice.prototype.description = function() {
+	var returnString = "";
 		// Use trigonometry on rotation field to get clock hour of start (0.2618 is PI/12)
 	var start = this.rotation - this.arc / 2;
 	var clockHour = Math.floor((((start + 0.2618) * 6 / Math.PI) + 12) % 12);
@@ -35686,12 +35700,7 @@ ED.RoundHole.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
-/**
- * Returns a string containing a text description of the doodle
- *
- * @returns {String} Description of doodle
- */
-ED.RoundHole.prototype.description = function() {
+ED.RoundHole.prototype.groupDescription = function() {
 	var returnString = "";
 
 	// Size description
@@ -35699,7 +35708,18 @@ ED.RoundHole.prototype.description = function() {
 	if (this.scaleX > 1.5) returnString = "Large ";
 
 	// Round hole
-	returnString += "Round hole ";
+	returnString += "Round hole at ";
+	return returnString;
+}
+
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.RoundHole.prototype.description = function() {
+	var returnString = "";
 
 	// Location (clockhours)
 	returnString += this.clockHour() + " o'clock";
