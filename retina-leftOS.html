@@ -66,7 +66,7 @@ left: -290px;
                 this.callBack = callBack;
 
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
-                _drawing.showDoodleControls = true;
+                _drawing.showDoodleControls = false;
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
@@ -80,7 +80,7 @@ left: -290px;
                             _drawing.addBindings({ILMPeel:{}});
                             _drawing.addBindings({EpiretinalMembrane:{}});
                             _drawing.addBindings({AntPVR:{}});
-                            
+                            _drawing.addBindings({Lattice:{}});
                             _drawing.addBindings({EncirclingBand:{}});
                             _drawing.addBindings({LaserDemarcation:{}});
                             _drawing.addBindings({CircumferentialBuckle:{}});
@@ -229,6 +229,8 @@ left: -290px;
 -->
 
 <strong><h3>Retinal Annotations</h3></strong>
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Lattice'); return false;" ><img src="assets/img/old/Lattice.gif" />Lattice</button>
+
 <button class="imgbutton" onclick="drawingEdit.addDoodle('HardExudate'); return false;" ><img src="assets/img/old/HardExudate.gif" />HardExudate</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CottonWoolSpot'); return false;" ><img src="assets/img/old/CottonWoolSpot.gif" />CottonWoolSpot</button>

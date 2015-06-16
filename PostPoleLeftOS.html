@@ -74,7 +74,7 @@ text-decoration: underline;
                             _drawing.addDoodle('PostPole');
                             //_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
 							
-
+                            _drawing.addBindings({Freehand:{}});
                             _drawing.addBindings({MacularDystrophy:{}});//GroupDescriptionForMascularDystrophy
                             _drawing.addBindings({ILMPeel:{}});
                             _drawing.addBindings({DrainageRetinotomy:{}});
@@ -218,6 +218,9 @@ text-decoration: underline;
 <!--<button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
 -->
 <strong><h3><u>PostPole Anotations</u></h3></strong>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('Freehand'); return false;" ><img src="" />Freehand</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SectorPRP'); return false;" ><img src="assets/img/old/SectorPRP.gif" />SectorPRP</button>
 
