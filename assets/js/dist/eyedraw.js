@@ -17289,6 +17289,195 @@ ED.ChoroidalHaemorrhage.prototype.snomedCode = function() {
  */
 
 /**
+ * Retina
+ * @author: Varun
+ * @class Retinoblastoma
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.Retinoblastoma = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "Retinoblastoma";
+
+	// Private parameters
+	this.numberOfHandles = 4;
+	this.initialRadius = 120;
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'apexX', 'apexY', 'rotation'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.Retinoblastoma.prototype = new ED.Doodle;
+ED.Retinoblastoma.prototype.constructor = ED.Retinoblastoma;
+ED.Retinoblastoma.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.Retinoblastoma.prototype.setHandles = function() {
+	// Array of handles
+	for (var i = 0; i < this.numberOfHandles; i++) {
+		this.handleArray[i] = new ED.Doodle.Handle(null, true, ED.Mode.Handles, false);
+	}
+
+	// Allow top handle to rotate doodle
+	this.handleArray[0].isRotatable = true;
+
+	// Handle for apex
+	this.handleArray[this.numberOfHandles] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Sets default properties
+ */
+ED.Retinoblastoma.prototype.setPropertyDefaults = function() {
+	// Create ranges to constrain handles
+	this.handleVectorRangeArray = new Array();
+	for (var i = 0; i < this.numberOfHandles; i++) {
+		// Full circle in radians
+		var cir = 2 * Math.PI;
+
+		// Create a range object for each handle
+		var n = this.numberOfHandles;
+		var range = new Object;
+		range.length = new ED.Range(+50, +290);
+		range.angle = new ED.Range((((2 * n - 1) * cir / (2 * n)) + i * cir / n) % cir, ((1 * cir / (2 * n)) + i * cir / n) % cir);
+		this.handleVectorRangeArray[i] = range;
+	}
+
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-50, +50);
+
+	this.addAtBack = true;
+}
+
+/**
+ * Sets default parameters
+ */
+ED.Retinoblastoma.prototype.setParameterDefaults = function() {
+	this.apexY = 50;
+	this.setOriginWithDisplacements(200, 150);
+
+	// Create a squiggle to store the handles points
+	var squiggle = new ED.Squiggle(this, new ED.Colour(100, 100, 100, 1), 4, true);
+
+	// Add it to squiggle array
+	this.squiggleArray.push(squiggle);
+
+	// Populate with handles at equidistant points around circumference
+	for (var i = 0; i < this.numberOfHandles; i++) {
+		var point = new ED.Point(0, 0);
+		point.setWithPolars(this.initialRadius, i * 2 * Math.PI / this.numberOfHandles);
+		this.addPointToSquiggle(point);
+	}
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.Retinoblastoma.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.Retinoblastoma.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Bezier points
+	var fp;
+	var tp;
+	var cp1;
+	var cp2;
+
+	// Angle of control point from radius line to point (this value makes path a circle Math.PI/12 for 8 points
+	var phi = 2 * Math.PI / (3 * this.numberOfHandles);
+
+	// Start curve
+	ctx.moveTo(this.squiggleArray[0].pointsArray[0].x, this.squiggleArray[0].pointsArray[0].y);
+
+	// Complete curve segments
+	for (var i = 0; i < this.numberOfHandles; i++) {
+		// From and to points
+		fp = this.squiggleArray[0].pointsArray[i];
+		var toIndex = (i < this.numberOfHandles - 1) ? i + 1 : 0;
+		tp = this.squiggleArray[0].pointsArray[toIndex];
+
+		// Control points
+		cp1 = fp.tangentialControlPoint(+phi);
+		cp2 = tp.tangentialControlPoint(-phi);
+
+		// Draw Bezier curve
+		ctx.bezierCurveTo(cp1.x, cp1.y, cp2.x, cp2.y, tp.x, tp.y);
+	}
+
+	// Close path
+	ctx.closePath();
+
+	// Set attributes
+	ctx.lineWidth = 4;
+	ctx.fillStyle = "rgba(247, 247, 30, 0.8)";
+	ctx.strokeStyle = ctx.fillStyle;
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Drusen
+		p = new ED.Point(0,0);
+		fill = "white";
+		var dr = 4;
+		n = Math.abs(Math.floor((-this.apexY + 50) / 5));
+		for (var i = 0; i < n; i++) {
+			p.setWithPolars(this.initialRadius * 0.8 * ED.randomArray[i + 10], 2 * Math.PI * ED.randomArray[i + 100]);
+			this.drawSpot(ctx, p.x, p.y, dr * 2, fill);
+		}
+	}
+
+	// Coordinates of handles (in canvas plane)
+	for (var i = 0; i < this.numberOfHandles; i++) {
+		this.handleArray[i].location = this.transform.transformPoint(this.squiggleArray[0].pointsArray[i]);
+	}
+	this.handleArray[this.numberOfHandles].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.Retinoblastoma.prototype.description = function() {
+	return 'Choroidal naevus';
+}
+
+/**
+ * Returns the SnoMed code of the doodle
+ *
+ * @returns {Int} SnoMed code of entity representated by doodle
+ */
+ED.Retinoblastoma.prototype.snomedCode = function() {
+	return 255024002;
+}
+
+/**
  * The optic disc
  *
  * @class ChoroidalNaevus
@@ -24343,7 +24532,7 @@ ED.HardDrusen.prototype.setHandles = function() {
  * Sets default dragging attributes
  */
 ED.HardDrusen.prototype.setPropertyDefaults = function() {
-	this.isMoveable = false;
+	this.isMoveable = true;
 	this.isRotatable = false;
 	this.isUnique = true;
 
@@ -24435,6 +24624,139 @@ ED.HardDrusen.prototype.description = function() {
 
 	return returnString + "hard drusen";
 }
+
+
+/**
+ * Vitreous Seeds
+ * @author - Varun
+ * @class VitreousSeeds
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.VitreousSeeds = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "VitreousSeeds";
+
+	// Saved parameters
+	this.savedParameterArray = ['apexY', 'scaleX', 'scaleY'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.VitreousSeeds.prototype = new ED.Doodle;
+ED.VitreousSeeds.prototype.constructor = ED.HardDrusen;
+ED.VitreousSeeds.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.VitreousSeeds.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, false);
+}
+
+/**
+ * Sets default dragging attributes
+ */
+ED.VitreousSeeds.prototype.setPropertyDefaults = function() {
+	this.isMoveable = true;
+	this.isRotatable = false;
+	this.isUnique = true;
+
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-160, +0);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+}
+
+/**
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
+ */
+ED.VitreousSeeds.prototype.setParameterDefaults = function() {
+	// Vitreous Seeds is displaced for Fundus, central for others
+	if (this.drawing.hasDoodleOfClass('Fundus')) {
+		this.originX = this.drawing.eye == ED.eye.Right ? -100 : 100;
+		this.scaleX = 0.5;
+		this.scaleY = 0.5;
+	}
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.VitreousSeeds.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.VitreousSeeds.superclass.draw.call(this, _point);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Invisible boundary
+	var r = 200;
+	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
+
+	// Close path
+	ctx.closePath();
+
+	// Set line attributes
+	ctx.lineWidth = 0;
+	ctx.fillStyle = "rgba(0, 0, 0, 0)";
+	ctx.strokeStyle = "rgba(0, 0, 0, 0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Non boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Colours
+		var fill = "green";
+
+		var dr = 10 / this.scaleX;
+
+		var p = new ED.Point(0, 0);
+		var n = 10 + Math.abs(Math.floor(this.apexY / 8));
+		for (var i = 0; i < n; i++) {
+			p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i + 100]);
+			this.drawSpot(ctx, p.x, p.y, dr, fill);
+		}
+	}
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(r * 0.7, -r * 0.7));
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.VitreousSeeds.prototype.description = function() {
+	var returnString = "Signficant numbers of ";
+	if (this.apexY > -100) returnString = "Moderate numbers of ";
+	if (this.apexY > -50) returnString = "Several ";
+
+	return returnString + "Vitreous Seeds";
+}
+
 
 /**
  * OpenEyes
