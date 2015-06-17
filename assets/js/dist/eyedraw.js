@@ -754,6 +754,22 @@ ED.Drawing.prototype.loadDoodles = function(_id) {
 	}
 }
 
+ED.Drawing.prototype.loadDoodlesJSON = function(_json) {
+
+	// If it exists and contains something, load it
+	if (true) {
+		var doodleSet = JSON.parse(_json);
+		this.resetDoodleSet = doodleSet;
+		this.load(doodleSet);
+
+		// Set isNew flag
+		this.isNew = false;
+
+		// Notify
+		this.notify("doodlesLoaded");
+	}
+}
+
 /**
  * Loads doodles from passed set in JSON format into doodleArray
  *
@@ -795,7 +811,7 @@ ED.Drawing.prototype.save = function() {
  * @returns {String} Serialized data in JSON format
  */
 ED.Drawing.prototype.json = function() {
-	var s = "[";
+	var s = "";
 
 	// Go through each member of doodle array, encoding it
 	for (var i = 0; i < this.doodleArray.length; i++) {
@@ -809,7 +825,7 @@ ED.Drawing.prototype.json = function() {
 	// Remove last comma
 	s = s.substring(0, s.length - 1);
 	
-	s+="]";
+	
 	return s;
 }
 
@@ -5455,7 +5471,7 @@ ED.Doodle.prototype.addEllipseToPath = function(_ctx, _x, _y, _w, _h) {
   var ox = (_w / 2) * kappa;
   var oy = (_h / 2) * kappa;
 
-  _ctx.moveTo(-_w/2, 0);
+  _ctx.moveTo(-_w/2, _h/2);
   _ctx.bezierCurveTo(_x - _w/2, _y - oy, _x - ox, _y - _h/2, _x, _y - _h/2);
   _ctx.bezierCurveTo(_x + ox, _y - _h/2, _x + _w/2, _y - oy, _x + _w/2, _y);
   _ctx.bezierCurveTo(_x + _w/2, _y + oy, _x + ox, _y + _h/2, _x, _y + _h/2);
@@ -14355,7 +14371,7 @@ ED.Lattice.prototype.draw = function(_point) {
 
 	// Boundary path
 	ctx.beginPath();
-	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 20);
+	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
 	// Arc across to mirror image point on the other side
 	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
 
