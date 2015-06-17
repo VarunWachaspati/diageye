@@ -795,7 +795,7 @@ ED.Drawing.prototype.save = function() {
  * @returns {String} Serialized data in JSON format
  */
 ED.Drawing.prototype.json = function() {
-	var s = "";
+	var s = "[";
 
 	// Go through each member of doodle array, encoding it
 	for (var i = 0; i < this.doodleArray.length; i++) {
@@ -803,11 +803,13 @@ ED.Drawing.prototype.json = function() {
 		if (doodle.isSaveable) {
 			s = s + doodle.json() + ",";
 		}
+
 	}
 
 	// Remove last comma
 	s = s.substring(0, s.length - 1);
-
+	
+	s+="]";
 	return s;
 }
 

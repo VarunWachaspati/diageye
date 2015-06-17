@@ -66,7 +66,7 @@ text-decoration: underline;
                 this.callBack = callBack;
 
                 _drawing.registerForNotifications(this, 'callBack', ['ready']);
-                _drawing.showDoodleControls = true;
+                _drawing.showDoodleControls = false;
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
