@@ -17554,7 +17554,7 @@ ED.Retinoblastoma.prototype.getMeanRadius = function() {
 	}
 }
 
-ED.Retinoblastoma.prototype.getLargestDistance = function() {
+ED.Retinoblastoma.prototype.getLargest = function() {
 	// Sum distances of (vertical) control points from centre
 	if (typeof(this.squiggleArray[0]) != 'undefined') {
 		var dia = 0;
@@ -17573,16 +17573,17 @@ ED.Retinoblastoma.prototype.getLargestDistance = function() {
 	}
 }
 
-ED.Retinoblastoma.prototype.getSmallestDistance = function() {
+ED.Retinoblastoma.prototype.getNextLargest = function() {
 	// Sum distances of (vertical) control points from centre
 	if (typeof(this.squiggleArray[0]) != 'undefined') {
-		var dia = 600;
+		var dia = 0;
 		var tem = 0;
+		var lar = this.getLargest();
 		for (var i = 0; i < this.numberOfHandles ;i++) {
 			for (var j = 1; j <this.numberOfHandles; j++) {
 				if(i != j){	
 					tem = Math.sqrt(Math.pow((this.squiggleArray[0].pointsArray[i].x - this.squiggleArray[0].pointsArray[j].x),2) + Math.pow((this.squiggleArray[0].pointsArray[i].y - this.squiggleArray[0].pointsArray[j].y),2)) ;
-					if(tem < dia){dia = tem;}
+					if(tem > dia && tem != lar ){dia = tem;}
 			}
 			}
 			
@@ -17703,6 +17704,7 @@ ED.Retinoblastoma.prototype.description = function() {
 	// Location (clockhours)
 	returnString += "at "+ this.clockHour() + " o'clock";
 	returnString += " in " + this.quadrant();
+	returnString += " (" + (this.getLargest()/100).toFixed(1) + " x " + (this.getNextLargest()/100).toFixed(1) +")";
 	return returnString;
 
 	}
@@ -29121,6 +29123,152 @@ ED.MacularThickening.prototype.groupDescription = function() {
  */
 ED.MacularThickening.prototype.description = function() {
 	return this.locationRelativeToFovea();
+}
+
+
+/**
+ * Sclerosed Vessel
+ *
+ * @class SclerosedVessel
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.SclerosedVessel = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "SclerosedVessel";
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'apexX', 'apexY'];
+
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+
+	// Invariate parameters
+	this.rotation = -Math.PI / 4;
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.SclerosedVessel.prototype = new ED.Doodle;
+ED.SclerosedVessel.prototype.constructor = ED.SclerosedVessel;
+ED.SclerosedVessel.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.SclerosedVessel.prototype.setHandles = function() {
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
+}
+
+/**
+ * Set default properties
+ */
+ED.SclerosedVessel.prototype.setPropertyDefaults = function() {
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(+18, +33);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0, +0);
+	this.isRotatable = true; 
+}
+
+/**
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
+ */
+ED.SclerosedVessel.prototype.setParameterDefaults = function() {
+
+	this.apexX = 24;
+	this.apexY = 0;
+
+	this.setOriginWithDisplacements(0, 150);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.SclerosedVessel.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.MacularThickening.superclass.draw.call(this, _point);
+
+	// Exudate radius
+	var r = Math.sqrt(this.apexX * this.apexX + this.apexY * this.apexY);
+
+	// Boundary path
+	ctx.beginPath();
+
+	// Exudate
+	ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+
+	// Set attributes
+	ctx.lineWidth = 3;
+	ctx.strokeStyle = "rgba(255, 255, 255, 0)";
+	ctx.fillStyle = "rgba(255, 255, 255, 0)";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Other paths and drawing here
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Start path
+		ctx.beginPath();
+
+		// Spacing of lines
+		var d = 15;
+
+		// Draw central line
+		ctx.moveTo(-r, 0);
+		ctx.lineTo(r, 0);
+
+		// Draw other lines
+		for (var s = -1; s < 2; s += 1) {
+			for (var y = d; y < r; y += d) {
+				var x = this.xForY(r, y);
+				ctx.moveTo(-x, s * y);
+				ctx.lineTo(x, s * y);
+			}
+		}
+
+		// Set attributes
+		ctx.lineWidth = 5;
+		ctx.lineCap = "round";
+		ctx.strokeStyle = "rgba(0, 0, 0, 1)";
+
+		// Draw lines
+		ctx.stroke();
+	}
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.SclerosedVessel.prototype.groupDescription = function() {
+	return "Sclerosed Vessels in ";
+}
+
+/**
+ * Returns a string containing a text description of the doodle
+ *
+ * @returns {String} Description of doodle
+ */
+ED.SclerosedVessel.prototype.description = function() {
+	return this.quadrant();
 }
 
 /**
