@@ -17514,13 +17514,16 @@ ED.Retinoblastoma.prototype.setPropertyDefaults = function() {
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +50);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0, +100);
 
-	this.addAtBack = true;
+	this.addAtBack = false;
+	this.isMoveable = true;
+	this.isLocked = false;
 }
 
 /**
  * Sets default parameters
  */
 ED.Retinoblastoma.prototype.setParameterDefaults = function() {
+
 	this.apexY = 0;
 	this.setOriginWithDisplacements(200, 150);
 
