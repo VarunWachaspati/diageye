@@ -76,7 +76,7 @@
                         case 'ready':
                             _drawing.addDoodle('OpticDisc');
                             //_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
-							
+							_drawing.addBindings({DiscVessel:{}});
                             _drawing.addBindings({OpticDiscPit:{}});
                             _drawing.addBindings({DiscHaemorrhage:{}});
                             _drawing.addBindings({DiscPallor:{}});
@@ -196,6 +196,8 @@
 -->
 
 <strong><h3>Optic Disc Annotations</h3></strong>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('DiscVessel'); return false;" ><img src="assets/img/icons/32x32/draw/new/DiscVessel.png" />DiscVessel</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('OpticDiscPit'); return false;" ><img src="assets/img/old/OpticDiscPit.gif" />OpticDiscPit</button>
 

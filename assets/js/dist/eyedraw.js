@@ -14449,6 +14449,164 @@ ED.Lattice.prototype.diagnosticHierarchy = function() {
 
 
 /**
+ * DiscVessel @author - Varun
+ *
+ * @class DiscVessel
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.DiscVessel = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "DiscVessel";
+
+	// Saved parameters
+	this.savedParameterArray = ['apexY', 'arc', 'rotation', 'radius'];
+
+	// Call super-class constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.DiscVessel.prototype = new ED.Doodle;
+ED.DiscVessel.prototype.constructor = ED.Lattice;
+ED.DiscVessel.superclass = ED.Doodle.prototype;
+
+/**
+ * Sets handle attributes
+ */
+ED.DiscVessel.prototype.setHandles = function() {
+	this.handleArray[0] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
+	this.handleArray[3] = new ED.Doodle.Handle(null, true, ED.Mode.Arc, false);
+	//this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
+}
+
+/**
+ * Sets default dragging attributes
+ */
+ED.DiscVessel.prototype.setPropertyDefaults = function() {
+	this.isMoveable = false;
+	this.isRotatable = true;
+	this.isScaleable = false;
+	// Update component of validation array for simple parameters
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-440, -440);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.25, +4);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.25, +4);
+	this.parameterValidationArray['arc']['range'].setMinAndMax(Math.PI / 18, Math.PI /4);
+	this.parameterValidationArray['radius']['range'].setMinAndMax(170, 280);
+}
+
+
+/**
+ * Sets default parameters
+ */
+ED.DiscVessel.prototype.setParameterDefaults = function() {
+	this.arc =   Math.PI / 6;
+	this.apexY = -440;
+	this.radius = 230;
+	this.setRotationWithDisplacements(60, 30);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.DiscVessel.prototype.draw = function(_point) {
+	// Get context
+	var ctx = this.drawing.context;
+
+	// Call draw method in superclass
+	ED.DiscVessel.superclass.draw.call(this, _point);
+
+	// Radius of outer curve just inside ora on right and left fundus diagrams
+	var r = this.radius;
+	var ro = r + 18;
+	var ri = r - 18;
+	var r = ri + (ro - ri) / 2;
+
+	// Calculate parameters for arcs
+	var theta = this.arc / 2;
+	var arcStart = -Math.PI / 2 + theta;
+	var arcEnd = -Math.PI / 2 - theta;
+
+	// Coordinates of 'corners' of lattice
+	var topRightX = r * Math.sin(theta);
+	var topRightY = -r * Math.cos(theta);
+	var topLeftX = -r * Math.sin(theta);
+	var topLeftY = topRightY;
+
+	// Boundary path
+	ctx.beginPath();
+	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
+	// Arc across to mirror image point on the other side
+	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
+
+	// Arc back to mirror image point on the other side
+	ctx.arc(0, 0, ri, arcEnd, arcStart, false);
+
+	// Close path
+	ctx.closePath();
+
+	// Set line attributes
+	ctx.lineWidth = 4;
+	//change
+	//var ptrn = ctx.createPattern(this.drawing.imageArray['LatticePattern'], 'repeat');
+	ctx.fillStyle = "red";
+	ctx.strokeStyle = "gray";
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[0].location = this.transform.transformPoint(new ED.Point(topLeftX, topLeftY));
+	this.handleArray[3].location = this.transform.transformPoint(new ED.Point(topRightX, topRightY));
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hit test
+	return this.isClicked;
+}
+ED.DiscVessel.prototype.groupDescription = function() {
+
+	returnString =  "Disc Vessel ";
+
+	return returnString;
+}
+
+ED.DiscVessel.prototype.description = function() {
+	var returnString = "";
+	returnString +=" in " + this.quadrant();
+	return returnString;
+}
+
+
+
+/** **TODO** - Find the SnoMed Code for DiscVessel
+ * Returns the SnoMed code of the doodle
+ *
+ * @returns {Int} SnoMed code of entity representated by doodle
+ */
+ED.DiscVessel.prototype.snomedCode = function() {
+	return 0;
+}
+
+/**
+ * Returns a number indicating position in a hierarchy of diagnoses from 0 to 9 (highest)
+ *
+ * @returns {Int} Position in diagnostic hierarchy
+ */
+ED.DiscVessel.prototype.diagnosticHierarchy = function() {
+	return 2;
+}
+
+
+/**
  * OpenEyes
  *
  * (C) Moorfields Eye Hospital NHS Foundation Trust, 2008-2011
@@ -17301,7 +17459,7 @@ ED.Retinoblastoma = function(_drawing, _parameterJSON) {
 	this.className = "Retinoblastoma";
 
 	// Private parameters
-	this.numberOfHandles = 4;
+	this.numberOfHandles = 8;
 	this.initialRadius = 120;
 
 	// Saved parameters
@@ -17353,8 +17511,8 @@ ED.Retinoblastoma.prototype.setPropertyDefaults = function() {
 	}
 
 	// Update component of validation array for simple parameters
-	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
-	this.parameterValidationArray['apexY']['range'].setMinAndMax(-50, +50);
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +50);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-0, +100);
 
 	this.addAtBack = true;
 }
@@ -17363,7 +17521,7 @@ ED.Retinoblastoma.prototype.setPropertyDefaults = function() {
  * Sets default parameters
  */
 ED.Retinoblastoma.prototype.setParameterDefaults = function() {
-	this.apexY = 50;
+	this.apexY = 0;
 	this.setOriginWithDisplacements(200, 150);
 
 	// Create a squiggle to store the handles points
@@ -17379,6 +17537,20 @@ ED.Retinoblastoma.prototype.setParameterDefaults = function() {
 		this.addPointToSquiggle(point);
 	}
 }
+
+ED.Retinoblastoma.prototype.getMeanRadius = function() {
+	// Sum distances of (vertical) control points from centre
+	if (typeof(this.squiggleArray[0]) != 'undefined') {
+		var sum = 0;
+		for (var i = 0; i < this.numberOfHandles; i++) {
+			sum += this.squiggleArray[0].pointsArray[i].length();
+		}
+		return sum / this.numberOfHandles;
+	} else {
+		return -this.apexY;
+	}
+}
+
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
@@ -17439,11 +17611,21 @@ ED.Retinoblastoma.prototype.draw = function(_point) {
 		p = new ED.Point(0,0);
 		fill = "white";
 		var dr = 4;
-		n = Math.abs(Math.floor((-this.apexY + 50) / 5));
+		n = Math.abs(Math.floor((-this.apexY) / 5));
 		for (var i = 0; i < n; i++) {
 			p.setWithPolars(this.initialRadius * 0.8 * ED.randomArray[i + 10], 2 * Math.PI * ED.randomArray[i + 100]);
 			this.drawSpot(ctx, p.x, p.y, dr * 2, fill);
 		}
+
+		// Fish Scale
+		fill1 = "brown";
+		n1 = Math.abs(Math.floor(this.apexX / 5));
+		for (var i = 0; i < n1; i++) {
+			p.setWithPolars(this.initialRadius * 0.8 * ED.randomArray[i + 10], 2 * Math.PI * ED.randomArray[i + 100]);
+			this.drawSpot(ctx, p.x, p.y, dr * 2, fill1);
+		}
+
+
 	}
 
 	// Coordinates of handles (in canvas plane)
@@ -17459,14 +17641,30 @@ ED.Retinoblastoma.prototype.draw = function(_point) {
 	return this.isClicked;
 }
 
+ED.Retinoblastoma.prototype.groupDescription = function() {
+	return 'Retinoblastoma ';
+
+}
+
 /**
  * Returns a string containing a text description of the doodle
  *
  * @returns {String} Description of doodle
  */
 ED.Retinoblastoma.prototype.description = function() {
-	return 'Choroidal naevus';
-}
+	var returnString = "";
+
+	// Size description
+	if (this.apexY > 1) returnString += "(Calcification present) ";
+	if (this.apexX > 1) returnString += "(Fish Scale Present) ";
+	
+
+	// Location (clockhours)
+	returnString += "at "+ this.clockHour() + " o'clock";
+	returnString += " in " + this.quadrant();
+	return returnString;
+
+	}
 
 /**
  * Returns the SnoMed code of the doodle
@@ -17474,7 +17672,7 @@ ED.Retinoblastoma.prototype.description = function() {
  * @returns {Int} SnoMed code of entity representated by doodle
  */
 ED.Retinoblastoma.prototype.snomedCode = function() {
-	return 255024002;
+	return 0;
 }
 
 /**
@@ -18185,6 +18383,7 @@ ED.CircumferentialBuckle.prototype.description = function() {
 
 	return returnString;
 }
+
 
 /**
  * OpenEyes
@@ -24704,7 +24903,7 @@ ED.VitreousSeeds.prototype.draw = function(_point) {
 	ctx.beginPath();
 
 	// Invisible boundary
-	var r = 200;
+	var r = 180;
 	ctx.arc(0, 0, r, 0, Math.PI * 2, true);
 
 	// Close path
@@ -24723,10 +24922,10 @@ ED.VitreousSeeds.prototype.draw = function(_point) {
 		// Colours
 		var fill = "green";
 
-		var dr = 10 / this.scaleX;
+		var dr = 9 / this.scaleX;
 
 		var p = new ED.Point(0, 0);
-		var n = 10 + Math.abs(Math.floor(this.apexY / 8));
+		var n = 10 + Math.abs(Math.floor(this.apexY / 18));
 		for (var i = 0; i < n; i++) {
 			p.setWithPolars(r * ED.randomArray[i], 2 * Math.PI * ED.randomArray[i + 100]);
 			this.drawSpot(ctx, p.x, p.y, dr, fill);
@@ -24749,14 +24948,15 @@ ED.VitreousSeeds.prototype.draw = function(_point) {
  *
  * @returns {String} Description of doodle
  */
-ED.VitreousSeeds.prototype.description = function() {
-	var returnString = "Signficant numbers of ";
-	if (this.apexY > -100) returnString = "Moderate numbers of ";
-	if (this.apexY > -50) returnString = "Several ";
-
-	return returnString + "Vitreous Seeds";
+ED.VitreousSeeds.prototype.groupDescription = function() {
+	
+	return "Vitreous Seeds ";
 }
 
+ED.VitreousSeeds.prototype.description = function() {
+	
+	return "in " + this.quadrant();
+}
 
 /**
  * OpenEyes
