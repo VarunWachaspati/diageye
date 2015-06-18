@@ -17554,6 +17554,44 @@ ED.Retinoblastoma.prototype.getMeanRadius = function() {
 	}
 }
 
+ED.Retinoblastoma.prototype.getLargestDistance = function() {
+	// Sum distances of (vertical) control points from centre
+	if (typeof(this.squiggleArray[0]) != 'undefined') {
+		var dia = 0;
+		var tem = 0;
+		for (var i = 0; i < this.numberOfHandles ;i++) {
+			for (var j = 1; j <this.numberOfHandles; j++) {
+			if(i !=j){
+					tem = Math.sqrt(Math.pow((this.squiggleArray[0].pointsArray[i].x - this.squiggleArray[0].pointsArray[j].x),2) + Math.pow((this.squiggleArray[0].pointsArray[i].y - this.squiggleArray[0].pointsArray[j].y),2)) ;
+					if(tem > dia){dia = tem;}
+			}
+			}
+		}
+		return dia;
+	} else {
+		return -this.apexY;
+	}
+}
+
+ED.Retinoblastoma.prototype.getSmallestDistance = function() {
+	// Sum distances of (vertical) control points from centre
+	if (typeof(this.squiggleArray[0]) != 'undefined') {
+		var dia = 600;
+		var tem = 0;
+		for (var i = 0; i < this.numberOfHandles ;i++) {
+			for (var j = 1; j <this.numberOfHandles; j++) {
+				if(i != j){	
+					tem = Math.sqrt(Math.pow((this.squiggleArray[0].pointsArray[i].x - this.squiggleArray[0].pointsArray[j].x),2) + Math.pow((this.squiggleArray[0].pointsArray[i].y - this.squiggleArray[0].pointsArray[j].y),2)) ;
+					if(tem < dia){dia = tem;}
+			}
+			}
+			
+		}
+		return dia;
+	} else {
+		return -this.apexY;
+	}
+}
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
