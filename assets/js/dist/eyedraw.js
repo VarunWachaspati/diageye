@@ -756,18 +756,17 @@ ED.Drawing.prototype.loadDoodles = function(_id) {
 
 ED.Drawing.prototype.loadDoodlesJSON = function(_json) {
 
-	// If it exists and contains something, load it
-	if (true) {
+	
 		var doodleSet = JSON.parse(_json);
 		this.resetDoodleSet = doodleSet;
 		this.load(doodleSet);
 
 		// Set isNew flag
-		this.isNew = false;
+		this.isNew = true;
 
 		// Notify
 		this.notify("doodlesLoaded");
-	}
+	
 }
 
 /**
@@ -791,7 +790,7 @@ ED.Drawing.prototype.load = function(_doodleSet) {
 
 	// Sort array by order (puts back doodle first)
 	this.doodleArray.sort(function(a, b) {
-		return a.order - b.order
+		return a.order - b.order 
 	});
 }
 
@@ -17698,7 +17697,7 @@ ED.Retinoblastoma.prototype.description = function() {
 
 	// Size description
 	if (this.apexY > 1) returnString += "(Calcification present) ";
-	if (this.apexX > 1) returnString += "(Fish Scale Present) ";
+	if (this.apexX > 1) returnString += "(Fish Flesh Appearance Present) ";
 	
 
 	// Location (clockhours)
@@ -29236,7 +29235,7 @@ ED.SclerosedVessel.prototype.draw = function(_point) {
 
 		// Set attributes
 		ctx.lineWidth = 5;
-		ctx.lineCap = "round";
+		//ctx.lineCap = "round";
 		ctx.strokeStyle = "rgba(0, 0, 0, 1)";
 
 		// Draw lines
@@ -30205,7 +30204,7 @@ ED.OpticDisc = function(_drawing, _parameterJSON) {
 	this.cdRatio = '0.3';
 
 // Parameters in doodle control bar (parameter name: parameter label)
-	this.controlParameterArray = {'mode':'Mode : ', 'cdRatio':'C D Ratio : ',};
+	this.controlParameterArray = {'mode':'Mode : ', 'cdRatio':'C D Ratio : '	};
 
 	// Saved parameters
 	this.savedParameterArray = ['apexY', 'mode'];
@@ -31226,7 +31225,7 @@ ED.PRPPostPole.superclass = ED.Doodle.prototype;
  * Sets default dragging attributes
  */
 ED.PRPPostPole.prototype.setPropertyDefaults = function() {
-	this.addAtBack = true;
+	this.addAtBack = false;
 	this.isUnique = true;
 	this.isMoveable = false;
 	this.isRotatable = false;

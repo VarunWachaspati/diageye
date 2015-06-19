@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<meta charset="UTF-8">
 <head>
     <link rel="stylesheet" href="assets/css/oe-eyedraw.css" type="text/css" media="screen" />
     <style type="text/css">
@@ -57,11 +58,16 @@ text-decoration: underline;
     </script>-->
     <script type="text/javascript">
             var saveInput = document.getElementById('saveInput');
-       		var drawingEdit
+       		var drawingEdit;
+            var undoStack = [];
             function init(){
             drawingEdit = new ED.Drawing(document.getElementById('canvasEdit'), ED.eye.Left, 'LPS', true, {graphicsPath:'assets/img/'});
             var controller = new eyeDrawController(drawingEdit);
-                drawingEdit.init();}
+                drawingEdit.init();
+                setTimeout("defaultCanvasJSON()",500);
+                //defaultCanvasJSON();
+            }
+            function defaultCanvasJSON(){undoStack.push(drawingEdit.save());}
             function eyeDrawController(_drawing){
                 this.callBack = callBack;
 
@@ -146,10 +152,8 @@ text-decoration: underline;
             }
             }
             }
-            
-
     </script>
-<script type="text/javascript">
+    <script type="text/javascript">
     //Script to print out Diagnosis Description of all doodles on the canvas 
     function print(){
         var saveInput = document.getElementById('saveInput');
@@ -185,9 +189,10 @@ text-decoration: underline;
             }   
     }
 
-}
-</script>
-</script>   
+    }
+    </script>
+   
+
 </head>
 <body onload="init();">
 <!--**Cortical Cataract Membrane button**
@@ -215,11 +220,15 @@ text-decoration: underline;
 
 <button class="imgbutton" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
 
+<button class="imgbutton" onclick="undo();" >Undo</button>
+
+<button class="imgbutton" onclick="redo();" >Redo</button>
+
 <!--<button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
 -->
 <strong><h3><u>PostPole Anotations</u></h3></strong>
 
-
+<div id="add">
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Freehand'); return false;" ><img src="" />Freehand</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SectorPRP'); return false;" ><img src="assets/img/old/SectorPRP.gif" />SectorPRP</button>
@@ -231,7 +240,7 @@ text-decoration: underline;
 <button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalVeinOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalVeinOcclusionPostPole.gif" />RetinalVeinOcclusionPostPole</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
-
+</div>
 </aside>
 <!---->
 <br/>
@@ -244,5 +253,48 @@ text-decoration: underline;
 <textarea rows="4" cols="164" id="saveInput"></textarea>
 
 </body>
-
+<script type="text/javascript">
+    var undoStack = [];
+    var redoStack = [];
+    var x = document.getElementById("add").childNodes;
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+    for(var i=0;i<x.length;i++){
+    x[i].addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+}
+    </script>
+   <script type="text/javascript">
+       function undo(){
+        redoStack.push(drawingEdit.save());
+        if (undoStack.length > 0) {
+        var json = undoStack.pop();
+        //alert(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        drawingEdit.loadDoodlesJSON(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        }
+        else
+        {window.alert("Error!");}
+        }
+    </script>
+<script type="text/javascript">
+    function redo(){
+        undoStack.push(drawingEdit.save());
+        if(redoStack.length > 0){
+            var json = redoStack.pop();
+            drawingEdit.loadDoodlesJSON(json);
+            drawingEdit.resetEyedraw();
+            drawingEdit.repaint();
+        }else{window.alert("None");}
+    }
+</script>
 </html>
