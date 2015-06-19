@@ -220,12 +220,16 @@
 
 <button class="imgbutton" onclick="drawingEdit.unlock();" ><img src="assets/img/icons/32x32/draw/old/unlock.png" />Unlock</button>
 
+<button class="imgbutton" onclick="undo();" ><img src="assets/img/icons/32x32/draw/old/Undo.png" />Undo</button>
+
+<button class="imgbutton" onclick="redo();" ><img src="assets/img/icons/32x32/draw/old/Redo.png" />Redo</button>
+
 <!--
 <button class="imgbutton" onclick="drawingEdit.clear(false);" >Clear</button>
 -->
 
 <strong><h3>Anterior Segment Annotations</h3></strong>
-
+<div id="add">
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealSuture'); return false;" ><img src="assets/img/old/CornealSuture.gif" />CornealSuture</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealAbrasion'); return false;" ><img src="assets/img/old/CornealAbrasion.gif" />CornealAbrasion</button>
@@ -260,23 +264,19 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PhakoIncision'); return false;" ><img src="assets/img/old/PhakoIncision.gif" />PhakoIncision</button>
 
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('LasikFlap'); return false;" ><img src="assets/img/old/LasikFlap.gif" />LasikFlap</button>
 
 <br>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CiliaryInjection'); return false;" ><img src="assets/img/old/CiliaryInjection.gif" />CiliaryInjection</button>
 
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Hyphaema'); return false;" ><img src="assets/img/old/Hyphaema.gif" />Hyphaema</button>
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Hypopyon'); return false;" ><img src="assets/img/old/Hypopyon.gif" />Hypopyon</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('TransilluminationDefect'); return false;" ><img src="assets/img/old/TransilluminationDefect.gif" />TransilluminationDefect</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('IrisNaevus'); return false;" ><img src="assets/img/old/IrisNaevus.gif" />IrisNaevus</button>
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Rubeosis'); return false;" ><img src="assets/img/old/Rubeosis.gif" />Rubeosis</button>
 
@@ -288,7 +288,6 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CutterPI'); return false;" ><img src="assets/img/old/CutterPI.gif" />CutterPI</button>
 
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('AntSynech'); return false;" ><img src="assets/img/old/AntSynech.gif" />AntSynech</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PosteriorSynechia'); return false;" ><img src="assets/img/old/PosteriorSynechia.gif" />PosteriorSynechia</button>
@@ -298,7 +297,6 @@
 -->
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SectorIridectomy'); return false;" ><img src="assets/img/old/SectorIridectomy.gif" />SectorIridectomy</button>
-
 
 <br>
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Lens'); return false;" ><img src="assets/img/old/Lens.gif" />Lens</button>
@@ -317,10 +315,6 @@
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Supramid'); return false;" ><img src="assets/img/old/Supramid.gif" />Supramid</button>
 -->
 
-
-
-
-
 <br>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ToricPCIOL'); return false;" ><img src="assets/img/old/ToricPCIOL.gif" />ToricPCIOL</button>
@@ -333,15 +327,9 @@
 
 <br>
 
-
-
-
 <!--
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ACMaintainer'); return false;" ><img src="assets/img/old/ACMaintainer.gif" />ACMaintainer</button>
 -->
-
-
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('TrabyConjIncision'); return false;" ><img src="assets/img/old/TrabyConjIncision.gif" />TrabyConjIncision</button>
 
@@ -361,10 +349,7 @@
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ConjunctivalSuture'); return false;" ><img src="assets/img/old/ConjunctivalSuture.gif" />ConjunctivalSuture</button>
 
-
 <button class="imgbutton" onclick="drawingEdit.addDoodle('ScleralIncision'); return false;" ><img src="assets/img/old/ScleralIncision.gif" />ScleralIncision</button>
-
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('Vicryl'); return false;" ><img src="assets/img/old/Vicryl.gif" />Vicryl</button>
 
@@ -373,7 +358,6 @@
 <button class="imgbutton" onclick="drawingEdit.addDoodle('AngleRecession'); return false;" ><img src="assets/img/old/AngleRecession.gif" />AngleRecession</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CircumferentialBuckle'); return false;" ><img src="assets/img/old/CircumferentialBuckle.gif" />CircumferentialBuckle</button>
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('BuckleSuture'); return false;" ><img src="assets/img/old/BuckleSuture.gif" />BuckleSuture</button>
 
@@ -395,7 +379,7 @@
 <!--
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
 -->
-
+</div>
 </aside>
 <!---->
 <br/>
@@ -408,5 +392,49 @@
 <textarea rows="4" cols="164" id="saveInput"></textarea>
 
 </body>
+<script type="text/javascript">
+    var undoStack = [];
+    var redoStack = [];
+    var x = document.getElementById("add").childNodes;
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+    for(var i=0;i<x.length;i++){
+    x[i].addEventListener("click",function(){
+        if(undoStack[undoStack.length-1]!==drawingEdit.save()){
+            undoStack.push(drawingEdit.save());
+        }
+    });
+}
+    </script>
+   <script type="text/javascript">
+       function undo(){
+        redoStack.push(drawingEdit.save());
+        if (undoStack.length > 0) {
+        var json = undoStack.pop();
+        //alert(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        drawingEdit.loadDoodlesJSON(json);
+        drawingEdit.resetEyedraw();
+        drawingEdit.repaint();
+        }
+        else
+        {window.alert("Error!");}
+        }
+    </script>
+<script type="text/javascript">
+    function redo(){
+        undoStack.push(drawingEdit.save());
+        if(redoStack.length > 0){
+            var json = redoStack.pop();
+            drawingEdit.loadDoodlesJSON(json);
+            drawingEdit.resetEyedraw();
+            drawingEdit.repaint();
+        }else{window.alert("None");}
+    }
+</script>
 
 </html>
