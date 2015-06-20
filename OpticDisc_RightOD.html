@@ -229,7 +229,12 @@
 
 <div id="canvasEdit_controls" class="ed-doodle-popup" style="position:absolute; left: 600px; top:205px; -webkit-user-select: text; -moz-user-select: text; user-select: text;z-index: 100;opacity: 1;"><h4>Controls</h4></div>
 
+<p style="position:absolute; left: 700px; top:48px;">Selected Annotation : </p>
+
+<p style="position:absolute; left: 850px; top:48px;" id="className">None Selected</p>
+
 <h2 id="diag-title">Diagnosis</h2>
+
 <textarea rows="4" cols="164" id="saveInput"></textarea>
 
 </body>
@@ -277,5 +282,9 @@
         }else{window.alert("None");}
     }
 </script>
-
+<script type="text/javascript">
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        document.getElementById("className").innerHTML = drawingEdit.selectedDoodle.className;
+        });
+</script>
 </html>

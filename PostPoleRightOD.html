@@ -233,11 +233,21 @@ text-decoration: underline;
 <button class="imgbutton" onclick="drawingEdit.addDoodle('RetinalVeinOcclusionPostPole'); return false;" ><img src="assets/img/old/RetinalVeinOcclusionPostPole.gif" />RetinalVeinOcclusionPostPole</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('PRPPostPole'); return false;" ><img src="assets/img/old/PRPPostPole.gif" />PRPPostPole</button>
+
 </div>
+
 </aside>
+
 <!---->
+
 <br/>
+
+<p style="position:absolute; left: 700px; top:48px;">Selected Annotation : </p>
+
+<p style="position:absolute; left: 850px; top:48px;" id="className">None Selected</p>
+
 <h2 id="diag-title">Diagnosis</h2>
+
 <textarea rows="4" cols="164" id="saveInput"></textarea>
 
 </body>
@@ -284,5 +294,10 @@ text-decoration: underline;
             drawingEdit.repaint();
         }else{window.alert("None");}
     }
+</script>
+<script type="text/javascript">
+    document.getElementById("canvasEdit").addEventListener("click",function(){
+        document.getElementById("className").innerHTML = drawingEdit.selectedDoodle.className;
+        });
 </script>
 </html>
