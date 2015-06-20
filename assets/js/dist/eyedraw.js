@@ -30207,7 +30207,7 @@ ED.OpticDisc = function(_drawing, _parameterJSON) {
 	this.controlParameterArray = {'mode':'Mode : ', 'cdRatio':'C D Ratio : '	};
 
 	// Saved parameters
-	this.savedParameterArray = ['apexY', 'mode'];
+	this.savedParameterArray = ['apexY', 'mode','cdRatio'];
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
