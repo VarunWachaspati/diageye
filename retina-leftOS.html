@@ -61,7 +61,10 @@ left: -290px;
             function init(){
             drawingEdit = new ED.Drawing(document.getElementById('canvasEdit'), ED.eye.Left, 'LPS', true, {graphicsPath:'assets/img/'});
             var controller = new eyeDrawController(drawingEdit);
-                drawingEdit.init();}
+                drawingEdit.init();
+            setTimeout("defaultCanvasJSON()",500);
+            }
+            function defaultCanvasJSON(){undoStack.push(drawingEdit.save());}
             function eyeDrawController(_drawing){
                 this.callBack = callBack;
 

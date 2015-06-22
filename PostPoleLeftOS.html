@@ -65,7 +65,6 @@ text-decoration: underline;
             var controller = new eyeDrawController(drawingEdit);
                 drawingEdit.init();
                 setTimeout("defaultCanvasJSON()",500);
-                //defaultCanvasJSON();
             }
             function defaultCanvasJSON(){undoStack.push(drawingEdit.save());}
             function eyeDrawController(_drawing){
