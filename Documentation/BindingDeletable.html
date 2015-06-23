@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<!--##STEP-1## - ADD THE FOLLOWING CSS FILE(oe-eyedraw.css) FOR DOODLE/CANVAS STYLING -->
+    <link rel="stylesheet" href="../../assets/css/oe-eyedraw.css" type="text/css" media="screen" />
+<!--##STEP-2## - ADD THE FOLLOWING JS FILE(eyedraw.js), IT CONTAINS ALL THE DOODLE/CANVAS BEHAVIOUR -->    
+    <script src="../assets/js/dist/eyedraw.js" type="text/javascript"></script>
+<!--##STEP-3## - ADD THE FOLLOWING SNIPPET(script tag) AND MODIFY IT ACCORDING TO THE PURPOSE -->    
+    <script type="text/javascript">
+       	// Make variable accessible to button
+        	var drawingEdit
+        // Intialization function- sets the canvas up    
+            function init(){
+                //Change the 2nd parameter according the eye type(left or right->ED.eye.Right)
+                //Make sure that the graphics path is always pointing towards assets/img/
+            drawingEdit = new ED.Drawing(document.getElementById('canvasEdit'), ED.eye.Right, 'RPS', true, {graphicsPath:'../assets/img/'});
+            var controller = new eyeDrawController(drawingEdit);
+                drawingEdit.init();}
+            function eyeDrawController(_drawing){
+                this.callBack = callBack;
+                _drawing.registerForNotifications(this, 'callBack', ['ready']);
+		                
+		_drawing.showDoodleControls = true;// Doodle Controls can be disabled by setting false
+                function callBack(_messageArray){
+                    switch (_messageArray['eventName']){
+                        case 'ready':
+                            _drawing.addDoodle('AntSeg');
+                            //Add(.addBindings()) in case if you want to control particular attributes of the Doodle
+							_drawing.addBindings({CorticalCataract:{grade:{id:'gradeSelect'}}});
+                            //If None is selected in DropDown then Doodle is Deleted from the DoodleArray
+							_drawing.addDeleteValues({gradeSelect:'None'});
+							_drawing.deselectDoodles();// Deselects doodles when canvas is ready after adding doodles
+                            break;
+                    }
+                }
+            }
+
+            </script>
+    <!--##NOTE## - ADVISED TO ADD THE FOLLOWING META TAG(CHARACTER SET-(UTF-8)) FOR AVOIDING DISCREPANCIES-->
+        <meta charset="UTF-8">
+    </head>
+    <!--##NOTE## - MAKE SURE BODY TAG HAS ONLOAD ATTRIBUTE CALLING THE INITIALIZATION FUNCTION-->
+    <body onload="init();">
+
+        <!-- doodle button to delete or add a doodle -->
+        <button class="imgbutton" disabled="disabled" id="deleteSelectedDoodleRPS" title="Delete" onclick="drawingEdit.deleteSelectedDoodle(); return false;" ><img src="../assets/img/old/deleteSelectedDoodle.gif" /></button>
+       
+       <!-- doodle button to add doodle CorticalCataract to the canvas-->
+ <button class="imgbutton" onclick="drawingEdit.addDoodle('CorticalCataract'); return false;" ><img src="../assets/img/old/CorticalCataract.gif" /></button>
+       
+        <br/>
+        <!--##NOTE## - MAKE SURE THAT THE DRAWING CANVAS HAS THE FOLLOWING CLASS(ed-canvas-edit) AND ID(canvasEdit)-->
+        <!-- Canvas element -->
+        <canvas id="canvasEdit" class="ed-canvas-edit" width="300" height="300"></canvas>
+
+        <!-- Input element DropDown -->
+        <select id="gradeSelect">
+            <option value="None" selected="selected">None</option>
+            <option value="Mild" >Mild</option>
+            <option value="Moderate">Moderate</option>
+            <option value="White">White</option>
+        </select>
+        <!--##NOTE## - MAKE SURE THAT DOODLE CONTROL DIV HAS THE FOLLOWING CLASS(ed-doodle-popup) AND ID(canvasEdit_controls) ONLY-->
+        <!-- Doodle control panel -->
+        <div id="canvasEdit_controls" class="ed-doodle-popup" style="position:static;"></div>
+
+    </body>
+</html>

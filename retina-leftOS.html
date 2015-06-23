@@ -78,7 +78,11 @@ left: -290px;
                             
 
                             _drawing.addBindings({MacularDystrophy:{}});//GroupDescriptionForMascularDystrophy
+                            _drawing.addBindings({ActiveVasculitisNasal:{}});
+                            _drawing.addBindings({SnailTrackDegeneration:{}});
+                            _drawing.addBindings({ActiveVasculitisTemporal:{}});
                             _drawing.addBindings({ILMPeel:{}});
+                            _drawing.addBindings({SubretinalPigments:{}})
                             _drawing.addBindings({DrainageRetinotomy:{}});
                             _drawing.addBindings({ILMPeel:{}});
                             _drawing.addBindings({EpiretinalMembrane:{}});
@@ -132,6 +136,7 @@ left: -290px;
                             _drawing.addBindings({ChoroidalNaevus:{}});
                             _drawing.addBindings({MacularThickening:{}});
                             _drawing.addBindings({FibrousProliferation:{}});
+                            _drawing.addBindings({RegressedFibrousProliferation:{}});
                             _drawing.addBindings({CNV:{}});
                             _drawing.addBindings({RetinalVeinOcclusionPostPole:{}});
                             _drawing.addBindings({DiscPallor:{}});
@@ -238,6 +243,24 @@ left: -290px;
 <strong><h3>Retinal Annotations</h3></strong>
 <div id="add">
 
+<button class="imgbutton" onclick="drawingEdit.addDoodle('AvascularRetina'); return false;" ><img src="assets/img/old/RetinalArteryOcclusionPostPole.gif" />AvascularRetina</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('SnailTrackDegeneration'); return false;" ><img src="assets/img/old/Lattice.gif" />SnailTrackDegeneration</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ActiveVasculitisNasal'); return false;" ><img src="assets/img/icons/32x32/draw/new/ActiveVasculitis.png" />ActiveVasculitisNasal</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('ActiveVasculitisTemporal'); return false;" ><img src="assets/img/icons/32x32/draw/new/ActiveVasculitis.png" />ActiveVasculitisTemporal</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('HealedVasculitisNasal'); return false;" ><img src="assets/img/icons/32x32/draw/new/HealedVasculitis.png" />HealedVasculitisNasal</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('HealedVasculitisTemporal'); return false;" ><img src="assets/img/icons/32x32/draw/new/HealedVasculitis.png" />HealedVasculitisTemporal</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('RPEDegeneration'); return false;" ><img src="assets/img/icons/32x32/draw/new/RPEDegeneration.png" />RPEDegeneration</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('IntraretinalPigments'); return false;" ><img src="assets/img/icons/32x32/draw/new/IntraretinalPigments.png" />IntraretinalPigments</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('SubretinalPigments'); return false;" ><img src="assets/img/icons/32x32/draw/new/SubretinalPigments.png" />SubretinalPigments</button>
+
 <button class="imgbutton" onclick="drawingEdit.addDoodle('VitreousSeeds'); return false;" ><img src="assets/img/icons/32x32/draw/new/VitreousSeeds.png" />VitreousSeeds</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('SiliconeOil'); return false;" ><img src="assets/img/icons/32x32/draw/old/SiliconeOil.png" />SiliconeOil</button>
@@ -276,7 +299,14 @@ left: -290px;
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('VitreousOpacity'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousOpacity</button>
 
+<button class="imgbutton" onclick="drawingEdit.addDoodle('VitreousCondensation'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousCondensation</button>
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('VitreousHaemorrhage'); return false;" ><img src="assets/img/old/VitreousOpacity.gif" />VitreousHaemorrhage</button>
+
 <button class="imgbutton" onclick="drawingEdit.addDoodle('FibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />FibrousProliferation</button>
+
+
+<button class="imgbutton" onclick="drawingEdit.addDoodle('RegressedFibrousProliferation'); return false;" ><img src="assets/img/old/FibrousProliferation.gif" />RegressedFibrousProliferation</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('StarFold'); return false;" ><img src="assets/img/old/StarFold.gif" />StarFold</button>
 
