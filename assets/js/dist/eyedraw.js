@@ -30785,7 +30785,7 @@ ED.Microaneurysm = function(_drawing, _parameterJSON) {
 	this.className = "Microaneurysm";
 
 	// Saved parameters
-	this.savedParameterArray = ['originX', 'originY'];
+	this.savedParameterArray = ['apexY','originX', 'originY'];
 	
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -30805,6 +30805,17 @@ ED.Microaneurysm.superclass = ED.Doodle.prototype;
 ED.Microaneurysm.prototype.setParameterDefaults = function() {
 	this.setOriginWithDisplacements(50, 30);
 }
+ED.Microaneurysm.prototype.setPropertyDefaults = function(){
+	this.isMoveable = true;
+	this.isRotatable = true;
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, +0);
+}
+
+ED.Microaneurysm.prototype.setHandles = function() {
+
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
+}
 
 /**
  * Draws doodle or performs a hit test if a Point parameter is passed
@@ -30819,8 +30830,16 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 	ED.Microaneurysm.superclass.draw.call(this, _point);
 
 	// Microaneurysm radius
-	var r = 14;
+	var r = 7;
 
+	ctx.beginPath();
+	// Invisible Boundary
+	var ri = 100;
+	ctx.arc(0, 0, ri, 0, Math.PI , true);
+	//ctx.moveTo(-ri,0);
+	ctx.lineTo(ri,0);
+	ctx.closePath();
+	
 	// Boundary path
 	ctx.beginPath();
 
@@ -30834,6 +30853,26 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
+	
+	// Non boundary paths
+	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+		// Colours
+		var fill = "red";
+
+		var dr = 7 / this.scaleX;
+
+		var p = new ED.Point(0, 0);
+		var n = Math.abs(Math.floor(this.apexY / 9));
+		for (var i = 0; i < n; i++) {
+			p.setWithPolars(ri * ED.randomArray[i+ 17], Math.PI * ED.randomArray[i + 67]);
+			this.drawSpot(ctx, p.x, p.y, dr, fill);
+		}
+	}
+
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
 
 	// Return value indicating successful hittest
 	return this.isClicked;
