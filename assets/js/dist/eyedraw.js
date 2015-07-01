@@ -152,7 +152,7 @@ ED.isFirefox = function() {
 
 // Checks that the value is numeric http://stackoverflow.com/questions/18082/validate-numbers-in-javascript-isnumeric
 ED.isNumeric = function(_value) {
-	return (_value - 0) == _value && _value.length > 0;
+	return !isNaN(parseFloat(_value)) && isFinite(_value);
 };
 
 /**
@@ -5387,6 +5387,52 @@ ED.Doodle.prototype.drawSpot = function(_ctx, _x, _y, _r, _colour) {
 	_ctx.lineWidth = 0;
 	_ctx.fill();
 	_ctx.stroke();
+	_ctx.restore();
+}
+
+
+/**
+ * Draws a cotton wool spot with given parameters
+ *
+ * @param {Object} _ctx Context of canvas
+ * @param {Float} _x X-coordinate of origin
+ * @param {Float} _y Y-coordinate of origin
+ * @param {Float} _r Radius
+ * @param {String} _colour String containing colour
+ */
+ED.Doodle.prototype.drawCotton = function(_ctx, _r, _h) {
+	_ctx.save();
+	
+	// Dimensions of haemorrhage
+	var d = _h / 3;
+
+	// Boundary path
+	_ctx.beginPath();
+
+	// Cotton wool spot
+	_ctx.moveTo(-_r, -_h);
+	_ctx.lineTo(-_r + d, -_h + 1 * d);
+	_ctx.lineTo(-_r, -_h + 2 * d);
+	_ctx.lineTo(-_r + d, -_h + 3 * d);
+	_ctx.lineTo(-_r, -_h + 4 * d);
+	_ctx.lineTo(-_r + d, -_h + 5 * d);
+	_ctx.lineTo(-_r, -_h + 6 * d);
+	_ctx.bezierCurveTo(-_r + d, -_h + 7 * d, _r - d, -_h + 7 * d, _r, -_h + 6 * d);
+	_ctx.lineTo(_r - d, -_h + 5 * d);
+	_ctx.lineTo(_r, -_h + 4 * d);
+	_ctx.lineTo(_r - d, -_h + 3 * d);
+	_ctx.lineTo(_r, -_h + 2 * d);
+	_ctx.lineTo(_r - d, -_h + 1 * d);
+	_ctx.lineTo(_r, -_h);
+	_ctx.bezierCurveTo(_r - d, -_h - d, -_r + d, -_h - d, -_r, -_h);
+
+	// Close path
+	_ctx.closePath();
+
+	// Set attributes
+	_ctx.lineWidth = 4;
+	_ctx.strokeStyle = "gray";
+	_ctx.fillStyle = "rgba(220,220,220,0.5)";
 	_ctx.restore();
 }
 
@@ -21556,7 +21602,7 @@ ED.CottonWoolSpot = function(_drawing, _parameterJSON) {
 	this.className = "CottonWoolSpot";
 
 	// Saved parameters
-	this.savedParameterArray = ['originX', 'originY', 'scaleX', 'scaleY'];
+	this.savedParameterArray = ['originX', 'originY', 'scaleX', 'scaleY', 'apexY'];
 
 	// Call superclass constructor
 	ED.Doodle.call(this, _drawing, _parameterJSON);
@@ -21574,6 +21620,7 @@ ED.CottonWoolSpot.superclass = ED.Doodle.prototype;
  */
 ED.CottonWoolSpot.prototype.setHandles = function() {
 	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
+	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
 }
 
 /**
@@ -21582,10 +21629,14 @@ ED.CottonWoolSpot.prototype.setHandles = function() {
 ED.CottonWoolSpot.prototype.setPropertyDefaults = function() {
 	this.isSqueezable = true;
 	this.isOrientated = true;
+	this.isRotatable = true;
+	this.isMoveable = true;
 
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
 	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['apexX']['range'].setMinAndMax(-50, +0);
+	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, +0);
 }
 
 /**
@@ -21644,9 +21695,20 @@ ED.CottonWoolSpot.prototype.draw = function(_point) {
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
+	// Non boundary paths
+//	if (this.drawFunctionMode == ED.drawFunctionMode.Draw) {
+//		var p = new ED.Point(0, 0);
+//		var n = Math.abs(Math.floor(this.apexY / 16));
+//		for (var i = 0; i < n; i++) {
+//			p.setWithPolars(ri * ED.randomArray[i+ 17], Math.PI * ED.randomArray[i + 67]);
+//			this.drawCotton(ctx, 80, p.y);
+//		}
+//	}
+
+
 	// Coordinates of handles (in canvas plane)
 	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(r, -h));
-
+	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
 	// Draw handles if selected
 	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
 
@@ -30803,6 +30865,7 @@ ED.Microaneurysm.superclass = ED.Doodle.prototype;
  * Use the setParameter function for derived parameters, as this will also update dependent variables
  */
 ED.Microaneurysm.prototype.setParameterDefaults = function() {
+	this.apexY = -50;
 	this.setOriginWithDisplacements(50, 30);
 }
 ED.Microaneurysm.prototype.setPropertyDefaults = function(){
@@ -30844,11 +30907,11 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 	ctx.beginPath();
 
 	// Microaneurysm
-	ctx.arc(0, 0, r, 0, 2 * Math.PI, true);
+	ctx.arc(0, 0, 11, 0, 2 * Math.PI, true);
 
 	// Set attributes
-	ctx.lineWidth = 1;
-	ctx.strokeStyle = "red";
+	ctx.lineWidth = 2;
+	ctx.strokeStyle = "black";
 	ctx.fillStyle = "red";
 
 	// Draw boundary path (also hit testing)
@@ -44938,4 +45001,117 @@ ED.VitreousCondensation.prototype.description = function() {
  */
 ED.VitreousCondensation.prototype.snomedCode = function() {
 	return 0;
+}
+
+
+/**
+ * Venous Dilatation
+ *
+ * @class VenousDilatation
+ * @property {String} className Name of doodle subclass
+ * @param {Drawing} _drawing
+ * @param {Object} _parameterJSON
+ */
+ED.VenousDilatation = function(_drawing, _parameterJSON) {
+	// Set classname
+	this.className = "VenousDilatation";
+
+	// Saved parameters
+	this.savedParameterArray = ['originX', 'originY', 'scaleX', 'scaleY', 'rotation'];
+	
+	// Call superclass constructor
+	ED.Doodle.call(this, _drawing, _parameterJSON);
+}
+
+/**
+ * Sets superclass and constructor
+ */
+ED.VenousDilatation.prototype = new ED.Doodle;
+ED.VenousDilatation.prototype.constructor = ED.VenousDilatation;
+ED.VenousDilatation.superclass = ED.Doodle.prototype;
+
+
+ED.VenousDilatation.prototype.setHandles = function() {
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, true);
+	this.handleArray[2].isVisible = true;
+	this.handleArray[2].isRotatable = true;
+}
+/**
+ * Sets default parameters (Only called for new doodles)
+ * Use the setParameter function for derived parameters, as this will also update dependent variables
+ */
+ED.VenousDilatation.prototype.setParameterDefaults = function() {
+	this.setOriginWithDisplacements(50, 30);
+	this.setOriginWithRotations(0,120);
+}
+ED.VenousDilatation.prototype.setPropertyDefaults = function() {
+	this.isRotatable = true;
+	this.isMoveable = true;
+
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+}
+
+/**
+ * Draws doodle or performs a hit test if a Point parameter is passed
+ *
+ * @param {Point} _point Optional point in canvas plane, passed if performing hit test
+ */
+ED.VenousDilatation.prototype.draw = function(_point) {
+	
+	// Get context
+	var ctx = this.drawing.context;
+	// Call draw method in superclass
+	ED.VenousDilatation.superclass.draw.call(this, _point);
+	
+	// radius
+	var r = 7;
+
+	// Boundary path
+	ctx.beginPath();
+
+	function wavyCircle(radius, numberOfWaves) {
+    'use strict';
+    var pi = Math.PI;
+    var n = numberOfWaves * 2;
+    var step = pi / n;
+    var waveRadius = radius * pi / n;
+    ctx.moveTo(radius, 0);
+    for (var i = 0; i < n / 2 + 1; ++i) {
+        var s = Math.sin(step * i * 2);
+        var c = Math.cos(step * i * 2);
+        ctx.arc(radius * c, radius * s, waveRadius, pi * 2 / n * i - pi / 2, pi * 2 / n * i + pi / 2, i % 2);
+    }
+};
+
+	ctx.beginPath();
+	ctx.translate(-100, 00);
+
+
+	// Set attributes
+	ctx.lineWidth = 7;
+	ctx.strokeStyle = "rgba(0,0,255,0.8)";
+	ctx.fillStyle = "rgba(220,220,0,0)";
+	wavyCircle(100, 19);
+	//ctx.stroke();
+
+	// Draw boundary path (also hit testing)
+	this.drawBoundary(_point);
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(this.apexX + 40, this.apexY + 40));
+
+	// Draw handles if selected
+	if (this.isSelected && !this.isForDrawing) this.drawHandles(_point);
+
+	// Return value indicating successful hittest
+	return this.isClicked;
+}
+
+/**
+ * Returns a String which, if not empty, determines the root descriptions of multiple instances of the doodle
+ *
+ * @returns {String} Group description
+ */
+ED.VenousDilatation.prototype.groupDescription = function() {
+	return "Venous Dilatation at " + this.quadrant();
 }
