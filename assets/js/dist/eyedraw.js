@@ -754,6 +754,41 @@ ED.Drawing.prototype.loadDoodles = function(_id) {
 	}
 }
 
+
+/**
+ * Loads doodles from an HTML element
+ *
+ * @param {string} containing JSON data
+ */
+ED.Drawing.prototype.loadDoodlesJSON = function(json) {
+	// If it exists and contains something, load it
+	
+		var doodleSet = window.JSON.parse(json);
+		this.resetDoodleSet = doodleSet;
+		this.load(doodleSet);
+
+		// Set isNew flag
+		this.isNew = false;
+
+		// Notify
+		this.notify("doodlesLoaded");
+	
+}
+
+ED.Drawing.prototype.loadJSON = function(json) {
+	// If it exists and contains something, load it
+	
+		var doodleSet = json;
+		this.resetDoodleSet = doodleSet;
+		this.load(doodleSet);
+
+		// Set isNew flag
+		this.isNew = false;
+
+		// Notify
+		this.notify("doodlesLoaded");
+	
+}
 /**
  * Loads doodles from passed set in JSON format into doodleArray
  *
@@ -4987,9 +5022,9 @@ ED.Doodle.prototype.quadrant = function() {
 	// Use trigonometry on rotation field to determine quadrant
 	returnString += this.originY < 0 ? "supero" : "infero";
 	if (this.drawing.eye == ED.eye.Right) {
-		returnString += this.originX < 0 ? "temporal" : "nasal";
+		returnString += this.originX < 100 ? "temporal" : "nasal";
 	} else {
-		returnString += this.originX < 0 ? "nasal" : "temporal";
+		returnString += this.originX < -100 ? "nasal" : "temporal";
 	}
 
 	returnString += " quadrant";
@@ -22019,8 +22054,8 @@ ED.CystoidMacularOedema.prototype.setPropertyDefaults = function() {
 	this.isUnique = true;
 
 	// Update validation array for simple parameters
-	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
-	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.2, +1.5);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.2, +1.5);
 }
 
 /**
@@ -24650,40 +24685,67 @@ ED.Fundus.prototype.draw = function(_point) {
 		// These values different for right and left side
 		if (this.drawing.eye != ED.eye.Right) {
 			var startX = 200;
-			var midX = 100;
+			var midX = 100 ;
 			var ctrlX = -50;
 			var endX = -100;
 			var foveaX = 100;
+
+
+		// Superior arcades
+		ctx.moveTo(startX-100, -50);
+		ctx.bezierCurveTo(midX-100, -166, 0-100, -62, 0-100, -12);
+		ctx.bezierCurveTo(0-100, -40, ctrlX-100, -100, endX-100, -50);
+
+		// Inferior arcades
+		ctx.moveTo(startX-100, 50);
+		ctx.bezierCurveTo(midX-100, 166, 0-100, 62, 0-100, 12);
+		ctx.bezierCurveTo(0-100, 40, ctrlX-100, 100, endX-100, 50);
+
+		// Small cross marking fovea
+		var crossLength = 10;
+		ctx.moveTo(0, -crossLength);
+		ctx.lineTo(0, crossLength);
+		ctx.moveTo(crossLength, 0);
+		ctx.lineTo(-crossLength, 0);
+
+		// Optic disc and cup
+		ctx.moveTo(25 -100, 0);
+		ctx.arc(0-100, 0, 25, 0, Math.PI * 2, true);
+		ctx.moveTo(12-100, 0);
+		ctx.arc(0-100, 0, 12, 0, Math.PI * 2, true);
+
 		} else {
 			var startX = -200;
 			var midX = -100;
 			var ctrlX = 50;
 			var endX = 100;
 			var foveaX = -100;
-		}
+
 
 		// Superior arcades
-		ctx.moveTo(startX, -50);
-		ctx.bezierCurveTo(midX, -166, 0, -62, 0, -12);
-		ctx.bezierCurveTo(0, -40, ctrlX, -100, endX, -50);
+		ctx.moveTo(startX+100, -50);
+		ctx.bezierCurveTo(midX+100, -166, 0+100, -62, 0+100, -12);
+		ctx.bezierCurveTo(0+100, -40, ctrlX+100, -100, endX+100, -50);
 
 		// Inferior arcades
-		ctx.moveTo(startX, 50);
-		ctx.bezierCurveTo(midX, 166, 0, 62, 0, 12);
-		ctx.bezierCurveTo(0, 40, ctrlX, 100, endX, 50);
+		ctx.moveTo(startX+100, 50);
+		ctx.bezierCurveTo(midX+100, 166, 0+100, 62, 0+100, 12);
+		ctx.bezierCurveTo(0+100, 40, ctrlX+100, 100, endX+100, 50);
 
 		// Small cross marking fovea
 		var crossLength = 10;
-		ctx.moveTo(foveaX, -crossLength);
-		ctx.lineTo(foveaX, crossLength);
-		ctx.moveTo(foveaX - crossLength, 0);
-		ctx.lineTo(foveaX + crossLength, 0);
+		ctx.moveTo(0, -crossLength);
+		ctx.lineTo(0, crossLength);
+		ctx.moveTo(crossLength, 0);
+		ctx.lineTo(-crossLength, 0);
 
 		// Optic disc and cup
-		ctx.moveTo(25, 0);
-		ctx.arc(0, 0, 25, 0, Math.PI * 2, true);
-		ctx.moveTo(12, 0);
-		ctx.arc(0, 0, 12, 0, Math.PI * 2, true);
+		ctx.moveTo(25+100, 0);
+		ctx.arc(0+100, 0, 25, 0, Math.PI * 2, true);
+		ctx.moveTo(12+100, 0);
+		ctx.arc(0+100, 0, 12, 0, Math.PI * 2, true);
+
+		}
 
 		// Draw it
 		ctx.stroke();
@@ -42193,7 +42255,7 @@ ED.TractionRetinalDetachment.prototype.setHandles = function() {
  */
 ED.TractionRetinalDetachment.prototype.setPropertyDefaults = function() {
 	this.isSqueezable = true;
-	this.addAtBack = true;
+	this.addAtBack = false;
 
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
@@ -42258,7 +42320,7 @@ ED.TractionRetinalDetachment.prototype.draw = function(_point) {
  * @returns {String} Group description
  */
 ED.TractionRetinalDetachment.prototype.groupDescription = function() {
-	return "Traction retinal detachment ";
+	return "Traction retinal detachment at ";
 }
 
 /**
@@ -42267,7 +42329,7 @@ ED.TractionRetinalDetachment.prototype.groupDescription = function() {
  * @returns {String} Description of doodle
  */
 ED.TractionRetinalDetachment.prototype.description = function() {
-	return this.locationRelativeToDisc();
+	return this.quadrant();
 }
 
 /**
@@ -45033,23 +45095,23 @@ ED.VenousDilatation.superclass = ED.Doodle.prototype;
 
 ED.VenousDilatation.prototype.setHandles = function() {
 	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, true);
-	this.handleArray[2].isVisible = true;
-	this.handleArray[2].isRotatable = true;
 }
 /**
  * Sets default parameters (Only called for new doodles)
  * Use the setParameter function for derived parameters, as this will also update dependent variables
  */
 ED.VenousDilatation.prototype.setParameterDefaults = function() {
-	this.setOriginWithDisplacements(50, 30);
-	this.setOriginWithRotations(0,120);
+	this.setOriginWithDisplacements(50, 50);
+	
 }
 ED.VenousDilatation.prototype.setPropertyDefaults = function() {
 	this.isRotatable = true;
 	this.isMoveable = true;
+	this.isUnique = false;
+	this.addAtBack = false;
 
-	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.5);
-	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.5);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.5, +1.7);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.5, +1.7);
 }
 
 /**
@@ -45071,7 +45133,7 @@ ED.VenousDilatation.prototype.draw = function(_point) {
 	ctx.beginPath();
 
 	function wavyCircle(radius, numberOfWaves) {
-    'use strict';
+    //'use strict';
     var pi = Math.PI;
     var n = numberOfWaves * 2;
     var step = pi / n;

@@ -195,6 +195,14 @@ left: -290px;
     }
 </script>
    
+<script type="text/javascript">
+    var crvo = [{"scaleLevel": 1,"version":1.1,"subclass":"Fundus","order":0},{"scaleLevel": 1,"version":1.1,"subclass":"RetinalVeinOcclusionPostPole","apexX":0,"apexY":-30,"arc":360,"rotation":176,"order":1},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":-60,"originY":11,"scaleX":1.70,"scaleY":1.70,"rotation":323,"order":2},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":-343,"originY":-209,"scaleX":1.67,"scaleY":1.67,"rotation":210,"order":3},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":335,"originY":198,"scaleX":1.70,"scaleY":1.70,"rotation":35,"order":4},{"scaleLevel": 1,"version":1.1,"subclass":"VenousDilatation","originX":53,"originY":-48,"scaleX":1.66,"scaleY":1.66,"rotation":152,"order":5},{"scaleLevel": 1,"version":1.1,"subclass":"MacularThickening","originX":0,"originY":0,"apexX":100,"apexY":0,"order":6},{"scaleLevel": 1,"version":1.1,"subclass":"CystoidMacularOedema","scaleX":0.20,"scaleY":0.20,"order":7},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":23,"originY":314,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":8},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":-300,"originY":0,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":9},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":3,"originY":-397,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":10},{"scaleLevel": 1,"version":1.1,"subclass":"CottonWoolSpot","originX":207,"originY":-213,"scaleX":0.50,"scaleY":0.50,"apexY":0,"order":11}];
+    function loadTemplate(json){
+        drawingEdit.resetEyedraw();
+        drawingEdit.loadJSON(json);
+        drawingEdit.repaint();
+    }
+</script>
 </head>
 
 <body onload="init();">
@@ -243,6 +251,9 @@ left: -290px;
 
 <strong><h3>Retinal Annotations</h3></strong>
 <div id="add">
+
+<button class="imgbutton" onclick="loadTemplate(crvo); return false;" ><img src="assets/img/old/VenousDilatation.png" />CRVOLoad</button>
+
 <button class="imgbutton" onclick="drawingEdit.addDoodle('VenousDilatation'); return false;" ><img src="assets/img/old/VenousDilatation.png" />VenousDilatation</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('AvascularRetina'); return false;" ><img src="assets/img/old/RetinalArteryOcclusionPostPole.gif" />AvascularRetina</button>
