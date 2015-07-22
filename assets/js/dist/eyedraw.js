@@ -1709,14 +1709,14 @@ ED.Drawing.prototype.hideTooltip = function() {
 ED.Drawing.prototype.moveToFront = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle != null) {
+	if (this.lastSelectedDoodle != null) {
 
-		if (this.selectedDoodle.isLocked) {
+		if (this.lastSelectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign large number to selected doodle
-		this.selectedDoodle.order = 1000;
+		this.lastSelectedDoodle.order = 1000;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -1742,14 +1742,14 @@ ED.Drawing.prototype.moveToFront = function() {
 ED.Drawing.prototype.moveToBack = function() {
 
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle !== null) {
+	if (this.lastSelectedDoodle !== null) {
 
-		if (this.selectedDoodle.isLocked) {
+		if (this.lastSelectedDoodle.isLocked) {
 			return;
 		}
 
 		// Assign negative order to selected doodle
-		this.selectedDoodle.order = -1;
+		this.lastSelectedDoodle.order = -1;
 
 		// Sort array by order (puts back doodle first)
 		this.doodleArray.sort(function(a, b) {
@@ -1956,8 +1956,8 @@ ED.Drawing.prototype.deleteDoodle = function(_doodle, really) {
  */
 ED.Drawing.prototype.deleteSelectedDoodle = function() {
 	// Should only be called if a doodle is selected, but check anyway
-	if (this.selectedDoodle != null) {
-		this.deleteDoodle(this.selectedDoodle,false);
+	if (this.lastSelectedDoodle != null) {
+		this.deleteDoodle(this.lastSelectedDoodle,false);
 	} else {
 		ED.errorHandler('ED.Drawing', 'deleteSelectedDoodle', 'Attempt to delete selected doodle, when none selected');
 	}
@@ -14920,6 +14920,7 @@ ED.ActiveVasculitisTemporal.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
 	this.isRotatable = true;
 	this.isScaleable = false;
+	this.isArcSymmetrical = false;
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-440, -440);
@@ -14964,20 +14965,22 @@ ED.ActiveVasculitisTemporal.prototype.draw = function(_point) {
 	var arcStart = -Math.PI / 2 + theta;
 	var arcEnd = -Math.PI / 2 - theta;
 
+if (this.drawing.eye == ED.eye.Right) {
+	
 	// Coordinates of 'corners' of lattice
-	var topRightX = r * Math.sin(theta);
+	var topRightX = r * Math.sin(theta) -100;
 	var topRightY = -r * Math.cos(theta);
-	var topLeftX = -r * Math.sin(theta);
+	var topLeftX = -r * Math.sin(theta) -100;
 	var topLeftY = topRightY;
 
 	// Boundary path
 	ctx.beginPath();
 	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
 	// Arc across to mirror image point on the other side
-	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
+	ctx.arc(-100, 0, ro, arcStart, arcEnd, true);
 
 	// Arc back to mirror image point on the other side
-	ctx.arc(0, 0, ri, arcEnd, arcStart, false);
+	ctx.arc(-100, 0, ri, arcEnd, arcStart, false);
 
 	// Close path
 	ctx.closePath();
@@ -14988,6 +14991,34 @@ ED.ActiveVasculitisTemporal.prototype.draw = function(_point) {
 	//var ptrn = ctx.createPattern(this.drawing.imageArray['LatticePattern'], 'repeat');
 	ctx.fillStyle = "red";
 	ctx.strokeStyle = "yellow";
+}	else{
+
+	// Coordinates of 'corners' of lattice
+	var topRightX = r * Math.sin(theta) +100;
+	var topRightY = -r * Math.cos(theta);
+	var topLeftX = -r * Math.sin(theta) +100;
+	var topLeftY = topRightY;
+
+	// Boundary path
+	ctx.beginPath();
+	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
+	// Arc across to mirror image point on the other side
+	ctx.arc(100, 0, ro, arcStart, arcEnd, true);
+
+	// Arc back to mirror image point on the other side
+	ctx.arc(100, 0, ri, arcEnd, arcStart, false);
+
+	// Close path
+	ctx.closePath();
+
+	// Set line attributes
+	ctx.lineWidth = 6;
+	//change
+	//var ptrn = ctx.createPattern(this.drawing.imageArray['LatticePattern'], 'repeat');
+	ctx.fillStyle = "red";
+	ctx.strokeStyle = "yellow";
+}
+	
 
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
@@ -15218,7 +15249,7 @@ ED.HealedVasculitisTemporal = function(_drawing, _parameterJSON) {
  * Sets superclass and constructor
  */
 ED.HealedVasculitisTemporal.prototype = new ED.Doodle;
-ED.HealedVasculitisTemporal.prototype.constructor = ED.ActiveVasculitisTemporal;
+ED.HealedVasculitisTemporal.prototype.constructor = ED.HealedVasculitisTemporal;
 ED.HealedVasculitisTemporal.superclass = ED.Doodle.prototype;
 
 /**
@@ -15235,8 +15266,9 @@ ED.HealedVasculitisTemporal.prototype.setHandles = function() {
  */
 ED.HealedVasculitisTemporal.prototype.setPropertyDefaults = function() {
 	this.isMoveable = false;
-	this.isRotatable = true;
-	this.isScaleable = false;
+	this.isRotatable = false;
+	this.isScaleable = true;
+	this.isArcSymmetrical = false;
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-440, -440);
@@ -15280,21 +15312,22 @@ ED.HealedVasculitisTemporal.prototype.draw = function(_point) {
 	var theta = this.arc / 2;
 	var arcStart = -Math.PI / 2 + theta;
 	var arcEnd = -Math.PI / 2 - theta;
-
+if (this.drawing.eye == ED.eye.Right) {
+	
 	// Coordinates of 'corners' of lattice
-	var topRightX = r * Math.sin(theta);
+	var topRightX = r * Math.sin(theta) -100;
 	var topRightY = -r * Math.cos(theta);
-	var topLeftX = -r * Math.sin(theta);
+	var topLeftX = -r * Math.sin(theta) -100;
 	var topLeftY = topRightY;
 
 	// Boundary path
 	ctx.beginPath();
 	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
 	// Arc across to mirror image point on the other side
-	ctx.arc(0, 0, ro, arcStart, arcEnd, true);
+	ctx.arc(-100, 0, ro, arcStart, arcEnd, true);
 
 	// Arc back to mirror image point on the other side
-	ctx.arc(0, 0, ri, arcEnd, arcStart, false);
+	ctx.arc(-100, 0, ri, arcEnd, arcStart, false);
 
 	// Close path
 	ctx.closePath();
@@ -15305,7 +15338,33 @@ ED.HealedVasculitisTemporal.prototype.draw = function(_point) {
 	//var ptrn = ctx.createPattern(this.drawing.imageArray['LatticePattern'], 'repeat');
 	ctx.fillStyle = "red";
 	ctx.strokeStyle = "black";
+}	else{
 
+	// Coordinates of 'corners' of lattice
+	var topRightX = r * Math.sin(theta) +100;
+	var topRightY = -r * Math.cos(theta);
+	var topLeftX = -r * Math.sin(theta) +100;
+	var topLeftY = topRightY;
+
+	// Boundary path
+	ctx.beginPath();
+	//this.addEllipseToPath(ctx, (topRightX+topLeftX)/2,(topRightY+topLeftY)/2 , 200, 200);
+	// Arc across to mirror image point on the other side
+	ctx.arc(100, 0, ro, arcStart, arcEnd, true);
+
+	// Arc back to mirror image point on the other side
+	ctx.arc(100, 0, ri, arcEnd, arcStart, false);
+
+	// Close path
+	ctx.closePath();
+
+	// Set line attributes
+	ctx.lineWidth = 6;
+	//change
+	//var ptrn = ctx.createPattern(this.drawing.imageArray['LatticePattern'], 'repeat');
+	ctx.fillStyle = "red";
+	ctx.strokeStyle = "black";
+}
 	// Draw boundary path (also hit testing)
 	this.drawBoundary(_point);
 
@@ -30935,10 +30994,12 @@ ED.Microaneurysm.prototype.setPropertyDefaults = function(){
 	this.isRotatable = true;
 	this.parameterValidationArray['apexX']['range'].setMinAndMax(-0, +0);
 	this.parameterValidationArray['apexY']['range'].setMinAndMax(-100, +0);
+	this.parameterValidationArray['scaleX']['range'].setMinAndMax(+0.8, +2.8);
+	this.parameterValidationArray['scaleY']['range'].setMinAndMax(+0.8, +2.8);
 }
 
 ED.Microaneurysm.prototype.setHandles = function() {
-
+	this.handleArray[2] = new ED.Doodle.Handle(null, true, ED.Mode.Scale, false);
 	this.handleArray[4] = new ED.Doodle.Handle(null, true, ED.Mode.Apex, true);
 }
 
@@ -30955,7 +31016,7 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 	ED.Microaneurysm.superclass.draw.call(this, _point);
 
 	// Microaneurysm radius
-	var r = 7;
+	var r = 6;
 
 	ctx.beginPath();
 	// Invisible Boundary
@@ -30969,10 +31030,10 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 	ctx.beginPath();
 
 	// Microaneurysm
-	ctx.arc(0, 0, 11, 0, 2 * Math.PI, true);
+	ctx.arc(0, 0, 6, 0, 2 * Math.PI, true);
 
 	// Set attributes
-	ctx.lineWidth = 2;
+	ctx.lineWidth = 1;
 	ctx.strokeStyle = "black";
 	ctx.fillStyle = "red";
 
@@ -30987,13 +31048,15 @@ ED.Microaneurysm.prototype.draw = function(_point) {
 		var dr = 7 / this.scaleX;
 
 		var p = new ED.Point(0, 0);
-		var n = Math.abs(Math.floor(this.apexY / 9));
+		var n = Math.abs(Math.floor(this.apexY / 5));
 		for (var i = 0; i < n; i++) {
 			p.setWithPolars(ri * ED.randomArray[i+ 17], Math.PI * ED.randomArray[i + 67]);
 			this.drawSpot(ctx, p.x, p.y, dr, fill);
 		}
 	}
 
+	// Coordinates of handles (in canvas plane)
+	this.handleArray[2].location = this.transform.transformPoint(new ED.Point(r * 0.7, -r * 0.7));
 	this.handleArray[4].location = this.transform.transformPoint(new ED.Point(this.apexX, this.apexY));
 
 	// Draw handles if selected
@@ -33190,8 +33253,9 @@ ED.PeripapillaryAtrophy.prototype.setHandles = function() {
 ED.PeripapillaryAtrophy.prototype.setPropertyDefaults = function() {
 	this.isScaleable = false;
 	this.isMoveable = false;
-	this.addAtBack = true;
+	this.addAtBack = false;
 	this.isUnique = true;
+	this.isLocked = false;
 
 	// Update component of validation array for simple parameters
 	this.parameterValidationArray['rotation']['range'].setMinAndMax(7 * Math.PI / 4, Math.PI / 4);
