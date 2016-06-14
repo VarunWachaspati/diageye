@@ -1,6 +1,6 @@
 <h1>DiagEye</h1>
 
-<h3>A set of diagnostic tools which are useful in modelling more than 600 eye defects and generates automated diagnosis description</h3>
+<h3>A set of diagnostic tools which are useful in modelling more than 200 eye defects and generates automated diagnosis description</h3>
 <h6>Currently being used by <a href="http://lvpei.org/">L.V Prasad Eye Institute</a> across 4 states in their secondary and teritary centers</h6>
 <h6>All the medical annotations are drawn on HTML5 canvas hence the corresponding PNG can be easily generated and saved</h6>
 
