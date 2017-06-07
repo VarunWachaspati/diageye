@@ -73,7 +73,7 @@
                 function callBack(_messageArray){
                     switch (_messageArray['eventName']){
                         case 'ready':
-                            _drawing.addDoodle('AntSeg');
+                            _drawing.addDoodle('AntSeg1');
                             _drawing.addBindings({CorticalCataract:{}});
                             _drawing.addBindings({IrisHook:{}});
                             _drawing.addBindings({LimbalRelaxingIncision:{}});
@@ -88,10 +88,9 @@
                             _drawing.addBindings({Vicryl:{}});
                             _drawing.addBindings({Lens:{}});
                             _drawing.addBindings({ToricPCIOL:{}});
-                         //   _drawing.addBindings({CornealAbrasion:{}});
+                            _drawing.addBindings({CornealAbrasion:{}});
                             _drawing.addBindings({CornealOedema:{}});
-                            _drawing.addBindings({bullae:{}});
-                           
+                             _drawing.addBindings({bullae:{}});
                             _drawing.addBindings({Rubeosis:{}});
                             _drawing.addBindings({CutterPI:{}});
                             _drawing.addBindings({PosteriorCapsule:{}});
@@ -227,7 +226,6 @@
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealOedema'); return false;" ><img src="assets/img/old/CornealOedema.gif" />CornealOedema</button>
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('bullae'); return false;" ><img src="assets/img/old/IRMA.gif" />bullae</button>
-
 
 <button class="imgbutton" onclick="drawingEdit.addDoodle('CornealStriae'); return false;" ><img src="assets/img/old/CornealStriae.gif" />CornealStriae</button>
 
